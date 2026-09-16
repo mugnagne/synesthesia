@@ -93,19 +93,24 @@ export default function Home() {
               Émotions
             </h2>
             <div className="flex flex-wrap gap-2">
-              {result.emotions.map((emotion) => (
-                <span
-                  key={emotion.nom}
-                  className="rounded-full border border-black/10 bg-white px-3 py-1 text-sm"
-                  title={`Intensité ${emotion.intensite}/5`}
-                >
-                  {emotion.nom}
-                  <span className="ml-1.5 text-[var(--accent)]">
-                    {"●".repeat(emotion.intensite)}
-                    <span className="text-black/15">{"●".repeat(5 - emotion.intensite)}</span>
+              {result.emotions.map((emotion) => {
+                // The model is prompted for an integer 1-5 but that's not schema-enforced,
+                // so clamp defensively before using it as a repeat() count.
+                const filled = Math.min(5, Math.max(0, Math.round(emotion.intensite)));
+                return (
+                  <span
+                    key={emotion.nom}
+                    className="rounded-full border border-black/10 bg-white px-3 py-1 text-sm"
+                    title={`Intensité ${emotion.intensite}/5`}
+                  >
+                    {emotion.nom}
+                    <span className="ml-1.5 text-[var(--accent)]">
+                      {"●".repeat(filled)}
+                      <span className="text-black/15">{"●".repeat(5 - filled)}</span>
+                    </span>
                   </span>
-                </span>
-              ))}
+                );
+              })}
             </div>
           </div>
 

@@ -1,35 +1,34 @@
 import { z } from "zod";
 
+// Note: cardinality/range constraints (.min()/.max()/.int()) are deliberately
+// NOT used here. The installed @anthropic-ai/sdk's zodOutputFormat() mishandles
+// them with zod v4 — it dumps the bounds into a stray `description` string
+// instead of proper JSON Schema keywords, producing a malformed schema that
+// the API rejects with a 400. Cardinality is communicated via `.describe()`
+// text and reinforced in the system prompt instead.
+
 export const EmotionSchema = z.object({
   nom: z.string().describe("Nom de l'émotion en français, ex: mélancolie"),
   intensite: z
     .number()
-    .min(1)
-    .max(5)
-    .describe("Intensité de l'émotion dans la situation, de 1 (légère) à 5 (dominante)"),
+    .describe("Intensité de l'émotion dans la situation, entier de 1 (légère) à 5 (dominante)"),
 });
 
 export const SynesthesiaResultSchema = z.object({
   emotions: z
     .array(EmotionSchema)
-    .min(2)
-    .max(6)
-    .describe("Les émotions dominantes évoquées par la situation décrite"),
+    .describe("2 à 6 émotions dominantes évoquées par la situation décrite"),
   notes_olfactives: z
     .array(z.string())
-    .min(6)
-    .max(14)
     .describe(
-      "Notes de parfumerie au vocabulaire standard (celui utilisé sur Fragrantica: bergamote, " +
-        "vétiver, cuir, ambre, feuilles mortes, foin coupé, musc, papier, etc.), classées de la " +
-        "plus évidente à la plus subtile, prêtes à être copiées-collées dans un moteur de " +
-        "recherche de parfums par notes.",
+      "6 à 14 notes de parfumerie au vocabulaire standard (celui utilisé sur Fragrantica: " +
+        "bergamote, vétiver, cuir, ambre, feuilles mortes, foin coupé, musc, papier, etc.), " +
+        "classées de la plus évidente à la plus subtile, prêtes à être copiées-collées dans un " +
+        "moteur de recherche de parfums par notes.",
     ),
   familles_olfactives: z
     .array(z.string())
-    .min(1)
-    .max(4)
-    .describe("Familles ou accords olfactifs correspondants, ex: chypré, boisé, hespéridé, poudré, aromatique"),
+    .describe("1 à 4 familles ou accords olfactifs correspondants, ex: chypré, boisé, hespéridé, poudré, aromatique"),
   recit: z
     .string()
     .describe(

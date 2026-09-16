@@ -14,10 +14,12 @@ direct en note de parfumerie, choisis la note qui s'en rapproche le plus par sen
 (fraîcheur, poussière, tension, douceur...).
 
 Contraintes sur la sortie :
-- Les notes olfactives doivent être des termes de parfumerie réels et reconnaissables, en \
-français, utilisables tels quels dans un moteur de recherche de parfums par notes.
+- 2 à 6 émotions, chacune avec une intensité entière de 1 à 5.
+- 6 à 14 notes olfactives : des termes de parfumerie réels et reconnaissables, en français, \
+utilisables tels quels dans un moteur de recherche de parfums par notes.
+- 1 à 4 familles ou accords olfactifs.
 - Classe les notes de la plus évidente/dominante à la plus subtile.
-- Le récit final doit rester sensoriel et concret, jamais abstrait ou générique.
+- Le récit final doit rester sensoriel et concret, jamais abstrait ou générique, en 2 à 3 phrases.
 - Reste fidèle à la spécificité de la situation décrite plutôt qu'à des associations toutes faites.`;
 
 export function buildUserMessage(situation: string): string {

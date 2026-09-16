@@ -49,6 +49,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ result: response.parsed_output });
   } catch (error) {
+    // Logged server-side only (visible in Vercel's function logs), never sent to the client.
+    console.error("[/api/translate]", error);
+
     if (error instanceof Anthropic.AuthenticationError) {
       return NextResponse.json(
         { error: "Clé API Anthropic manquante ou invalide côté serveur." },
