@@ -63,26 +63,20 @@ export async function POST(req: NextRequest) {
         { status: 429 },
       );
     }
-    if (error instanceof Anthropic.BadRequestError) {
-      // TEMPORARY (debugging the structured-output rollout): surface Anthropic's own
-      // message so failures are diagnosable from the browser without Vercel log access.
-      // Safe to show — this is the API's validation text, never contains the key.
-      return NextResponse.json(
-        { error: `Requête invalide envoyée au modèle : ${error.message}` },
-        { status: 400 },
-      );
-    }
-    if (error instanceof Anthropic.APIError && error.status === 402) {
+    // Anthropic returns insufficient credit as a 400 invalid_request_error (not the
+    // 402 billing_error its docs describe for billing problems generally) — matched
+    // on message text since the error `.type` is the same generic invalid_request_error.
+    if (error instanceof Anthropic.APIError && /credit balance/i.test(error.message)) {
       return NextResponse.json(
         { error: "Crédit Anthropic insuffisant : ajoute du crédit dans console.anthropic.com." },
         { status: 402 },
       );
     }
+    if (error instanceof Anthropic.BadRequestError) {
+      return NextResponse.json({ error: "Requête invalide envoyée au modèle." }, { status: 400 });
+    }
     if (error instanceof Anthropic.APIError) {
-      return NextResponse.json(
-        { error: `Le service de traduction est indisponible : ${error.message}` },
-        { status: 502 },
-      );
+      return NextResponse.json({ error: "Le service de traduction est indisponible." }, { status: 502 });
     }
     throw error;
   }
