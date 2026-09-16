@@ -26,23 +26,18 @@ propre : licencier un jeu de données tiers déjà construit (ex. FragDB, ~134k 
 licence commerciale explicite), ou générer notre propre base à partir de la connaissance
 générale de Claude sur les parfums réels et leurs notes publiquement connues.
 
-Pour cette v1, on a choisi la seconde option (gratuite, immédiate) :
-`scripts/generate-perfumes.ts` interroge Claude (`claude-sonnet-5` par défaut, cf.
-`lib/perfumeBrands.ts` pour la liste des ~50 maisons couvertes) marque par marque, avec des
-sorties structurées, et écrit le résultat dans `data/perfumes.json`. Limite connue : fiable sur
-les parfums connus des grandes maisons, moins fiable sur le très niche (risque d'hallucination du
-modèle sur des notes précises). Si le produit prend, migrer vers un jeu de données licencié
-(comme FragDB) est le prochain palier de qualité.
+Pour cette v1, on a choisi la seconde option (gratuite, immédiate) : `data/perfumes.json`
+contient actuellement **195 parfums réels sur 52 maisons**, rédigés directement à la main (par
+Claude, dans une session Claude Code — donc sans consommer de crédit API séparé) plutôt que
+générés en appelant l'API. Limite connue : fiable sur les parfums connus des grandes maisons,
+moins fiable sur le très niche (c'est de la mémoire de modèle, pas une base vérifiée). Si le
+produit prend, migrer vers un jeu de données licencié (comme FragDB) est le prochain palier de
+qualité.
 
-Lancer la génération (consomme du crédit API — voir le coût dans les logs du script) :
-
-```bash
-ANTHROPIC_API_KEY=... npm run generate:perfumes
-```
-
-Ou via GitHub Actions : onglet *Actions* → *Generate perfume database* → *Run workflow* (nécessite
-un secret de repo `ANTHROPIC_API_KEY`, séparé de celui configuré sur Vercel). Le script est
-idempotent : une interruption ne fait perdre que la marque en cours de génération.
+`scripts/generate-perfumes.ts` (et le workflow GitHub Actions associé) restent disponibles comme
+méthode alternative pour étoffer la base via l'API Anthropic si on veut automatiser une montée en
+volume plus tard — mais pour l'instant, la voie la plus simple pour l'étoffer reste de redemander
+à Claude (dans une session comme celle-ci) d'ajouter des marques/parfums à `data/perfumes.json`.
 
 ## Lancer le projet en local
 
