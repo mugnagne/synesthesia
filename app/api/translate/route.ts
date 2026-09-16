@@ -64,7 +64,13 @@ export async function POST(req: NextRequest) {
       );
     }
     if (error instanceof Anthropic.BadRequestError) {
-      return NextResponse.json({ error: "Requête invalide envoyée au modèle." }, { status: 400 });
+      // TEMPORARY (debugging the structured-output rollout): surface Anthropic's own
+      // message so failures are diagnosable from the browser without Vercel log access.
+      // Safe to show — this is the API's validation text, never contains the key.
+      return NextResponse.json(
+        { error: `Requête invalide envoyée au modèle : ${error.message}` },
+        { status: 400 },
+      );
     }
     if (error instanceof Anthropic.APIError && error.status === 402) {
       return NextResponse.json(
@@ -73,7 +79,10 @@ export async function POST(req: NextRequest) {
       );
     }
     if (error instanceof Anthropic.APIError) {
-      return NextResponse.json({ error: "Le service de traduction est indisponible." }, { status: 502 });
+      return NextResponse.json(
+        { error: `Le service de traduction est indisponible : ${error.message}` },
+        { status: 502 },
+      );
     }
     throw error;
   }
