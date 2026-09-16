@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { anthropic, TRANSLATION_MODEL } from "@/lib/anthropic";
-import { SynesthesiaResultSchema } from "@/lib/schema";
+import { synesthesiaOutputFormat } from "@/lib/schema";
 import { SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt";
 
 const MAX_SITUATION_LENGTH = 600;
@@ -36,7 +35,7 @@ export async function POST(req: NextRequest) {
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: buildUserMessage(situation) }],
       output_config: {
-        format: zodOutputFormat(SynesthesiaResultSchema),
+        format: synesthesiaOutputFormat,
       },
     });
 
