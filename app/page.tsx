@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import type { SynesthesiaResult } from "@/lib/schema";
+import { CURRENT_EXAMPLE } from "@/lib/examples";
 
-const EXAMPLE = "La rentrée des classes quand on a 8 ans.";
 const FRAGRANTICA_NOTE_SEARCH = "https://www.fragrantica.com/findperfume/";
 
 export default function Home() {
@@ -66,7 +66,7 @@ export default function Home() {
         <textarea
           value={situation}
           onChange={(e) => setSituation(e.target.value)}
-          placeholder={EXAMPLE}
+          placeholder={CURRENT_EXAMPLE}
           rows={3}
           maxLength={600}
           className="w-full resize-none rounded-lg border border-black/10 bg-white/60 p-4 text-base outline-none focus:border-[var(--accent)]"
