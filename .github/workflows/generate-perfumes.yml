@@ -1,0 +1,43 @@
+name: Generate perfume database
+
+# Manual trigger only — this calls the Anthropic API ~50 times (one per brand
+# in lib/perfumeBrands.ts) and commits the result to data/perfumes.json.
+# Idempotent: re-running skips brands already present in the file, so it's
+# safe to re-run after a partial failure (rate limit, network blip).
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to run on and commit the result to"
+        required: true
+        default: "claude/synesthesie-architecture-sofvzy"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm install
+
+      - run: npm run generate:perfumes
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit data/perfumes.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/perfumes.json
+          git diff --staged --quiet && echo "Nothing to commit." && exit 0
+          git commit -m "Generate perfume database ($(date -u +%Y-%m-%d))"
+          git push origin HEAD:${{ inputs.branch }}

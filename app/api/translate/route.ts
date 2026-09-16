@@ -3,6 +3,11 @@ import Anthropic from "@anthropic-ai/sdk";
 import { anthropic, TRANSLATION_MODEL } from "@/lib/anthropic";
 import { synesthesiaOutputFormat } from "@/lib/schema";
 import { SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt";
+import { matchPerfumes } from "@/lib/match";
+import perfumesData from "@/data/perfumes.json";
+import type { Perfume } from "@/lib/perfumeSchema";
+
+const PERFUMES = perfumesData as Perfume[];
 
 const MAX_SITUATION_LENGTH = 600;
 
@@ -46,7 +51,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ result: response.parsed_output });
+    const parfums_suggeres = matchPerfumes(response.parsed_output, PERFUMES);
+
+    return NextResponse.json({ result: response.parsed_output, parfums_suggeres });
   } catch (error) {
     // Logged server-side only (visible in Vercel's function logs), never sent to the client.
     console.error("[/api/translate]", error);

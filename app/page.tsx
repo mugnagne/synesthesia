@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { SynesthesiaResult } from "@/lib/schema";
+import type { MatchedPerfume } from "@/lib/match";
 import { CURRENT_EXAMPLE } from "@/lib/examples";
 
 const FRAGRANTICA_NOTE_SEARCH = "https://www.fragrantica.com/findperfume/";
@@ -11,6 +12,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<SynesthesiaResult | null>(null);
+  const [parfums, setParfums] = useState<MatchedPerfume[]>([]);
   const [copied, setCopied] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -20,6 +22,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setParfums([]);
     setCopied(false);
 
     try {
@@ -34,6 +37,7 @@ export default function Home() {
         return;
       }
       setResult(data.result);
+      setParfums(data.parfums_suggeres ?? []);
     } catch {
       setError("Impossible de contacter le serveur.");
     } finally {
@@ -113,6 +117,29 @@ export default function Home() {
               })}
             </div>
           </div>
+
+          {parfums.length > 0 && (
+            <div>
+              <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]/60">
+                Parfums suggérés
+              </h2>
+              <ul className="flex flex-col gap-2">
+                {parfums.map((p) => (
+                  <li
+                    key={`${p.marque}-${p.nom}`}
+                    className="rounded-lg border border-black/10 bg-white px-3 py-2 text-sm"
+                  >
+                    <span className="font-medium">{p.marque}</span> — {p.nom}
+                    {p.notes_communes.length > 0 && (
+                      <p className="mt-1 text-xs text-[var(--foreground)]/60">
+                        Notes en commun : {p.notes_communes.join(", ")}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
             <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]/60">
