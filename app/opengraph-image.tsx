@@ -20,9 +20,8 @@ export default function OpengraphImage() {
           padding: 64,
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 4 }}>
+        <div style={{ display: "flex", fontSize: 22, letterSpacing: 4 }}>
           <span>SYNESTHÉSIE</span>
-          <span>TRADUCTION SENSORIELLE</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>

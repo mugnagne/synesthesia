@@ -98,7 +98,6 @@ export default function Translator({
           <Blocks filled={3} />
           <span className="wordmark">Synesthésie</span>
         </span>
-        <p className="label">Traduction sensorielle</p>
       </header>
 
       <main className="main">

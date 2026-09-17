@@ -27,7 +27,7 @@ licence commerciale explicite), ou générer notre propre base à partir de la c
 générale de Claude sur les parfums réels et leurs notes publiquement connues.
 
 Pour cette v1, on a choisi la seconde option (gratuite, immédiate) : `data/perfumes.json`
-contient actuellement **277 parfums réels sur 91 maisons**, rédigés directement à la main (par
+contient actuellement **600 parfums réels sur 91 maisons**, rédigés directement à la main (par
 Claude, dans une session Claude Code — donc sans consommer de crédit API séparé) plutôt que
 générés en appelant l'API. Couverture volontairement inégale : dense sur les maisons de luxe et
 niche (Chanel, Dior, Guerlain, Le Labo, Byredo, Serge Lutens...) où la connaissance du modèle est

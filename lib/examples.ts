@@ -14,6 +14,6 @@ export const EXAMPLES = [
   "S'endormir dans une voiture au retour de vacances.",
 ];
 
-export const CURRENT_EXAMPLE_INDEX = 8;
+export const CURRENT_EXAMPLE_INDEX = 9;
 
 export const CURRENT_EXAMPLE = EXAMPLES[CURRENT_EXAMPLE_INDEX];
