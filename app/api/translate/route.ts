@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { anthropic, TRANSLATION_MODEL } from "@/lib/anthropic";
 import { synesthesiaOutputFormat } from "@/lib/schema";
 import { SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt";
 import { matchPerfumes } from "@/lib/match";
 import { PERFUMES } from "@/lib/catalogue";
+import { logTranslation } from "@/lib/db";
 
 const MAX_SITUATION_LENGTH = 600;
 
@@ -49,6 +50,22 @@ export async function POST(req: NextRequest) {
     }
 
     const parfums_suggeres = matchPerfumes(response.parsed_output, PERFUMES);
+
+    // Runs after the response is sent, not racing it — a bare unawaited
+    // promise risks the serverless runtime freezing before the write lands.
+    // A missing/unreachable database (e.g. before the Postgres integration
+    // is connected) must not break the actual feature — only the journal
+    // loses that entry.
+    after(() => {
+      logTranslation({
+        situation,
+        result: response.parsed_output!,
+        parfums: parfums_suggeres,
+        model: TRANSLATION_MODEL,
+      }).catch((error) => {
+        console.error("[/api/translate] log", error);
+      });
+    });
 
     return NextResponse.json({ result: response.parsed_output, parfums_suggeres });
   } catch (error) {

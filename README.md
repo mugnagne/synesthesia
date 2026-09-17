@@ -41,6 +41,23 @@ méthode alternative pour étoffer la base via l'API Anthropic si on veut automa
 volume plus tard — mais pour l'instant, la voie la plus simple pour l'étoffer reste de redemander
 à Claude (dans une session comme celle-ci) d'ajouter des marques/parfums à `data/perfumes.json`.
 
+## Le journal (`/journal`)
+
+Chaque traduction réussie est enregistrée (situation, notes, familles, récit, parfums suggérés)
+via `lib/db.ts` — Postgres (Neon, l'intégration native de Vercel), écriture non bloquante après
+l'envoi de la réponse (`after()` de Next.js) pour ne jamais ralentir ni casser la traduction si la
+base est indisponible. `/journal` liste les entrées les plus récentes, protégée par Basic Auth
+(variable `JOURNAL_PASSWORD`) puisqu'elle affiche ce que de vraies personnes ont tapé.
+
+Mise en place (deux variables d'env, séparées de celles de l'app principale) :
+1. Vercel → *Storage* → *Create Database* → Postgres (Neon) → connecter au projet. Ça injecte
+   automatiquement `DATABASE_URL`.
+2. Vercel → *Settings* → *Environment Variables* → ajouter `JOURNAL_PASSWORD` (n'importe quel
+   nom d'utilisateur passe l'auth Basic, seul le mot de passe est vérifié).
+
+Sans ces deux variables, le reste du site fonctionne normalement — seul `/journal` répond
+503/erreur, et les traductions ne sont simplement pas journalisées.
+
 ## Lancer le projet en local
 
 ```bash
