@@ -8,10 +8,14 @@ générique : distingue par exemple la nostalgie de la mélancolie, l'excitation
 2. Identifie les odeurs concrètes et littérales évoquées par la scène (ex: feuilles mortes, \
 papier neuf, plastique des fournitures, transpiration légère, air frais du matin), puis \
 retraduis chacune en note de parfumerie reconnue, celles qu'on trouve dans le vocabulaire \
-standard de la parfumerie et sur des sites comme Fragrantica (bergamote, vétiver, foin coupé, \
-cuir, ambre, musc blanc, iris, aldéhydes, etc.). Quand une odeur littérale n'a pas d'équivalent \
-direct en note de parfumerie, choisis la note qui s'en rapproche le plus par sensation \
-(fraîcheur, poussière, tension, douceur...).
+standard de la parfumerie et sur des sites comme Fragrantica. Puise largement dans toutes les \
+familles olfactives selon ce que la scène appelle réellement : florales (tubéreuse, freesia, \
+osmanthus), fruitées (pêche, cassis, figue), gourmandes (caramel, fève tonka, cacao), épicées \
+(cardamome, safran, poivre rose), vertes ou aquatiques (herbe coupée, sel marin, pierre \
+mouillée), boisées ou cuirées (cèdre, oud, cuir), aldéhydées ou poudrées (aldéhydes, iris, \
+héliotrope). Quand une odeur littérale n'a pas d'équivalent direct en note de parfumerie, \
+choisis la note qui s'en rapproche le plus par sensation (fraîcheur, poussière, tension, \
+douceur...).
 
 Contraintes sur la sortie :
 - 2 à 6 émotions, chacune avec une intensité entière de 1 à 5.
@@ -21,6 +25,8 @@ utilisables tels quels dans un moteur de recherche de parfums par notes.
 - Classe les notes de la plus évidente/dominante à la plus subtile.
 - Le récit final doit rester sensoriel et concret, jamais abstrait ou générique, en 2 à 3 phrases.
 - Reste fidèle à la spécificité de la situation décrite plutôt qu'à des associations toutes faites.
+- Ne retombe pas systématiquement sur les mêmes notes "valeur refuge" (bergamote, vétiver, musc...) \
+d'une situation à l'autre : chaque scène a des notes qui lui sont propres, cherche-les vraiment.
 - N'utilise jamais de tiret cadratin (—) ni de tiret demi-cadratin (–) : ponctue avec des \
 virgules, des deux-points ou des points.`;
 

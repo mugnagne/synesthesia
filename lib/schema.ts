@@ -14,10 +14,10 @@ export const SynesthesiaResultSchema = z.object({
   notes_olfactives: z
     .array(z.string())
     .describe(
-      "6 à 14 notes de parfumerie au vocabulaire standard (celui utilisé sur Fragrantica: " +
-        "bergamote, vétiver, cuir, ambre, feuilles mortes, foin coupé, musc, papier, etc.), " +
-        "classées de la plus évidente à la plus subtile, prêtes à être copiées-collées dans un " +
-        "moteur de recherche de parfums par notes.",
+      "6 à 14 notes de parfumerie au vocabulaire standard (celui utilisé sur Fragrantica), " +
+        "puisées largement dans toutes les familles selon la scène plutôt que sur les mêmes " +
+        "notes refuges à chaque fois, classées de la plus évidente à la plus subtile, prêtes à " +
+        "être copiées-collées dans un moteur de recherche de parfums par notes.",
     ),
   familles_olfactives: z
     .array(z.string())
@@ -61,10 +61,10 @@ const SYNESTHESIA_JSON_SCHEMA = {
     notes_olfactives: {
       type: "array",
       description:
-        "6 à 14 notes de parfumerie au vocabulaire standard (celui utilisé sur Fragrantica: " +
-        "bergamote, vétiver, cuir, ambre, feuilles mortes, foin coupé, musc, papier, etc.), " +
-        "classées de la plus évidente à la plus subtile, prêtes à être copiées-collées dans un " +
-        "moteur de recherche de parfums par notes.",
+        "6 à 14 notes de parfumerie au vocabulaire standard (celui utilisé sur Fragrantica), " +
+        "puisées largement dans toutes les familles selon la scène plutôt que sur les mêmes " +
+        "notes refuges à chaque fois, classées de la plus évidente à la plus subtile, prêtes à " +
+        "être copiées-collées dans un moteur de recherche de parfums par notes.",
       items: { type: "string" },
     },
     familles_olfactives: {

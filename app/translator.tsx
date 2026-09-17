@@ -5,7 +5,7 @@ import type { SynesthesiaResult } from "@/lib/schema";
 import type { MatchedPerfume } from "@/lib/match";
 import { CURRENT_EXAMPLE } from "@/lib/examples";
 
-const FRAGRANTICA_NOTE_SEARCH = "https://www.fragrantica.com/findperfume/";
+const FRAGRANTICA_NOTE_SEARCH = "https://www.fragrantica.fr/search-notes/";
 const MAX_LENGTH = 600;
 
 const INDEX: [string, string, string][] = [

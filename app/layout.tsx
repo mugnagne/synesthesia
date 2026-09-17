@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, IBM_Plex_Mono } from "next/font/google";
+import { Jacquard_24, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Instrument_Serif({
-  subsets: ["latin"],
+// Jacquard 24 ships one weight, no italic, and only latin/latin-ext — no accented
+// glyphs beyond that. Reserved for short, large moments (wordmark, titles); running
+// text stays on Space Mono, which is what --font-body is for below.
+const display = Jacquard_24({
+  subsets: ["latin", "latin-ext"],
   weight: "400",
-  style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const mono = Space_Mono({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
   variable: "--font-mono",
   display: "swap",
 });
