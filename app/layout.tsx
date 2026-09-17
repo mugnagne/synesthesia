@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Space_Mono } from "next/font/google";
+import { Jacquard_24, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-// Variable weight (100-900) and a real italic — built for exactly this: huge,
-// confident display type that still holds together as running text (récit).
-const display = Fraunces({
+// Jacquard 24 ships one weight, no italic, and only latin/latin-ext — no accented
+// glyphs beyond that. Reserved for short, large moments (wordmark, titles); running
+// text stays on Space Mono, which is what --font-body is for below.
+const display = Jacquard_24({
   subsets: ["latin", "latin-ext"],
-  weight: "variable",
-  style: ["normal", "italic"],
+  weight: "400",
   variable: "--font-display",
   display: "swap",
 });
