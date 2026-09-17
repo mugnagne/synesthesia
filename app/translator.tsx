@@ -29,10 +29,15 @@ function Blocks({ filled }: { filled: number }) {
 
 function BandHead({ index, title }: { index: string; title: string }) {
   return (
-    <div className="band-head">
-      <p className="label label-blue">{index}</p>
-      <p className="label">{title}</p>
-    </div>
+    <>
+      <span className="ghost-num" aria-hidden="true">
+        {index}
+      </span>
+      <div className="band-head">
+        <p className="label label-blue">{index}</p>
+        <p className="label">{title}</p>
+      </div>
+    </>
   );
 }
 
@@ -100,14 +105,20 @@ export default function Translator({
         </span>
       </header>
 
+      <section className="hero">
+        <p className="display reveal">Une situation précise entre.</p>
+        <p
+          className="display display-quiet reveal"
+          style={{ animationDelay: "90ms" }}
+        >
+          Des parfums réels sortent.
+        </p>
+      </section>
+
       <main className="main">
         <section className="band">
           <BandHead index="001" title="Situation" />
           <form onSubmit={handleSubmit}>
-            <p className="body small" style={{ marginBottom: "var(--s3)" }}>
-              Une situation précise entre. Des notes de parfumerie et des parfums réels sortent.
-            </p>
-
             <label className="label" htmlFor="situation" style={{ display: "block", marginBottom: "var(--s1)" }}>
               Décrivez la scène
             </label>
@@ -130,7 +141,12 @@ export default function Translator({
                 marginTop: "var(--s2)",
               }}
             >
-              <button type="submit" className="btn" disabled={loading || !situation.trim()}>
+              <button
+                type="submit"
+                className="btn"
+                disabled={loading || !situation.trim()}
+                aria-busy={loading}
+              >
                 {loading ? "Traduction en cours" : "Traduire"}
               </button>
               <p className="label">
@@ -141,11 +157,15 @@ export default function Translator({
         </section>
 
         {!result && !loading && !error && (
-          <section className="band">
+          <section className="band reveal" style={{ animationDelay: "120ms" }}>
             <BandHead index="000" title="Index" />
             <ul className="rows">
-              {INDEX.map(([n, titre, description]) => (
-                <li key={n} className="row-stack">
+              {INDEX.map(([n, titre, description], i) => (
+                <li
+                  key={n}
+                  className="row-stack reveal-row"
+                  style={{ animationDelay: `${120 + i * 60}ms` }}
+                >
                   <p className="label">
                     <span className="label-blue">{n}</span> {titre}
                   </p>
@@ -179,11 +199,15 @@ export default function Translator({
 
           {result && (
             <>
-              <section className="band">
+              <section className="band reveal">
                 <BandHead index="002" title="Émotions" />
                 <ul className="rows">
-                  {result.emotions.map((emotion) => (
-                    <li key={emotion.nom} className="row">
+                  {result.emotions.map((emotion, i) => (
+                    <li
+                      key={emotion.nom}
+                      className="row reveal-row"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
                       <span>{emotion.nom}</span>
                       <Blocks filled={emotion.intensite} />
                     </li>
@@ -191,7 +215,7 @@ export default function Translator({
                 </ul>
               </section>
 
-              <section className="band band-blue">
+              <section className="band band-blue reveal-flood" style={{ animationDelay: "80ms" }}>
                 <BandHead index="003" title="Notes olfactives" />
                 <div>
                   <p className="notes">{result.notes_olfactives.join(", ")}</p>
@@ -218,23 +242,31 @@ export default function Translator({
                 </div>
               </section>
 
-              <section className="band">
+              <section className="band reveal" style={{ animationDelay: "160ms" }}>
                 <BandHead index="004" title="Familles" />
                 <ul className="tags">
-                  {result.familles_olfactives.map((famille) => (
-                    <li key={famille} className="tag label">
+                  {result.familles_olfactives.map((famille, i) => (
+                    <li
+                      key={famille}
+                      className="tag label reveal-row"
+                      style={{ animationDelay: `${160 + i * 60}ms` }}
+                    >
                       {famille}
                     </li>
                   ))}
                 </ul>
               </section>
 
-              <section className="band">
+              <section className="band reveal" style={{ animationDelay: "240ms" }}>
                 <BandHead index="005" title="Parfums" />
                 {parfums.length > 0 ? (
                   <ul className="rows">
-                    {parfums.map((p) => (
-                      <li key={`${p.marque}-${p.nom}`} className="row-stack">
+                    {parfums.map((p, i) => (
+                      <li
+                        key={`${p.marque}-${p.nom}`}
+                        className="row-stack reveal-row"
+                        style={{ animationDelay: `${240 + i * 60}ms` }}
+                      >
                         <p className="label label-blue">{p.marque}</p>
                         <p className="title" style={{ marginTop: "var(--s1)" }}>
                           {p.nom}
@@ -255,7 +287,7 @@ export default function Translator({
                 )}
               </section>
 
-              <section className="band">
+              <section className="band reveal" style={{ animationDelay: "320ms" }}>
                 <BandHead index="006" title="Le lien" />
                 <p className="wall-text">{result.recit}</p>
               </section>

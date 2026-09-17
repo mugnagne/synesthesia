@@ -72,32 +72,38 @@ body {
 
 .display {
   font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(2.75rem, 13vw, 6.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
+  font-weight: 900;
+  font-size: clamp(3.25rem, 15vw, 9rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
   margin: 0;
+}
+
+.display-quiet {
+  font-weight: 500;
+  font-style: italic;
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
 }
 
 .title {
   font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(1.625rem, 7vw, 2.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
-/* Jacquard 24 ships no italic — a synthesized slant on a pixel face reads as
-   broken, not stylish. Space Mono has a real italic, so the récit uses that
-   instead: still a distinct voice from the body copy, properly drawn. */
+/* Fraunces has a real italic (unlike the pixel display face this replaced),
+   drawn for exactly this: a big, confident pull-quote voice for the récit. */
 .wall-text {
-  font-family: var(--font-mono), ui-monospace, monospace;
+  font-family: var(--font-display), Georgia, serif;
   font-style: italic;
-  font-size: clamp(1.0625rem, 4vw, 1.375rem);
-  line-height: 1.5;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  line-height: 1.1;
   margin: 0;
-  max-width: var(--measure);
+  max-width: 42rem;
 }
 
 .label {
@@ -152,7 +158,27 @@ body {
   flex: 1;
 }
 
+/* --- Hero — the one loud statement, made once ------------------------------ */
+
+.hero {
+  padding: var(--s6) var(--gutter) var(--s5);
+  border-bottom: var(--rule);
+  overflow: hidden;
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    padding: var(--s8) var(--gutter) var(--s6);
+  }
+}
+
+.hero p {
+  margin: 0;
+}
+
 .band {
+  position: relative;
+  overflow: hidden;
   padding: var(--s5) var(--gutter);
   border-bottom: var(--rule);
 }
@@ -163,10 +189,22 @@ body {
 }
 
 .band-head {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: baseline;
   gap: var(--s2);
   margin-bottom: var(--s3);
+}
+
+/* Oversized outline numeral behind the running label — desktop only. On
+   mobile the empty column it lives in doesn't exist, and a huge absolutely
+   positioned glyph next to stacked content is exactly the "broken
+   responsiveness" the anti-vibecode brief warns about, so it's gated off
+   below the breakpoint where there's room for it to be free instead of
+   crowded. */
+.ghost-num {
+  display: none;
 }
 
 @media (min-width: 64rem) {
@@ -181,6 +219,35 @@ body {
     margin-bottom: 0;
     flex-direction: column;
     gap: var(--s1);
+  }
+
+  .ghost-num {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    left: var(--gutter);
+    top: var(--s4);
+    /* Sized to actually fit three digits in the label column's width —
+       the earlier 6.5rem version clipped down to unreadable rings. Kept
+       the width/overflow guard anyway: a numeral that fits is the goal,
+       not a numeral that happens to. */
+    width: 7rem;
+    overflow: hidden;
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 900;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in srgb, var(--ultramarine) 40%, transparent);
+    transform: rotate(-4deg);
+    transform-origin: top left;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .band-blue .ghost-num {
+    -webkit-text-stroke: 1.5px color-mix(in srgb, var(--paper) 45%, transparent);
   }
 }
 
@@ -239,6 +306,20 @@ body {
   cursor: not-allowed;
 }
 
+/* Working, not just "unavailable" — a moving stripe instead of going flat
+   grey, so the wait actually reads as progress. */
+.btn:disabled[aria-busy="true"] {
+  background-color: var(--ink);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--ink) 0 10px,
+    color-mix(in srgb, var(--ink) 70%, var(--ultramarine) 30%) 10px 20px
+  );
+  background-size: 200% 100%;
+  color: var(--paper);
+  animation: stripe 900ms linear infinite;
+}
+
 .btn-quiet {
   padding: 0;
   border: 0;
@@ -280,10 +361,12 @@ body {
 
 .notes {
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.25rem, 5vw, 1.75rem);
-  line-height: 1.25;
+  font-weight: 600;
+  font-size: clamp(2rem, 8vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
   margin: 0;
-  max-width: 44rem;
+  max-width: 56rem;
 }
 
 .tags {
@@ -340,6 +423,53 @@ body {
   }
 }
 
+/* --- Entrées ---------------------------------------------------------------
+   Two moves, reused everywhere instead of inventing a new one per element:
+   `rise` for anything that should just arrive, `flood` for the one section
+   that should feel like it's poured in. Stagger comes from animation-delay
+   set inline per item, never from a different animation. */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flood {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes stripe {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
+}
+
+.reveal {
+  animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.reveal-row {
+  animation: rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.reveal-flood {
+  animation: flood 650ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .skeleton {
     animation: none;
@@ -348,6 +478,20 @@ body {
   .btn,
   .link {
     transition: none;
+  }
+
+  .reveal,
+  .reveal-row,
+  .reveal-flood,
+  .hero .display {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+
+  .btn:disabled[aria-busy="true"] {
+    animation: none;
   }
 }
 
