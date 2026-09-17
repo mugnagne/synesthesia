@@ -244,5 +244,126 @@
 
   { "marque": "Davidoff", "nom": "Cool Water", "genre": "homme", "familles_olfactives": ["aromatique aquatique"], "notes_olfactives": ["menthe", "lavande", "notes marines", "musc"] },
 
-  { "marque": "L'Occitane en Provence", "nom": "Eau des Baux", "genre": "mixte", "familles_olfactives": ["aromatique"], "notes_olfactives": ["romarin", "citron", "genévrier"] }
+  { "marque": "L'Occitane en Provence", "nom": "Eau des Baux", "genre": "mixte", "familles_olfactives": ["aromatique"], "notes_olfactives": ["romarin", "citron", "genévrier"] },
+
+  { "marque": "By Kilian", "nom": "Good Girl Gone Bad", "genre": "femme", "familles_olfactives": ["floral"], "notes_olfactives": ["jasmin", "tubéreuse", "orange", "musc"] },
+  { "marque": "By Kilian", "nom": "Straight to Heaven", "genre": "mixte", "familles_olfactives": ["oriental boisé"], "notes_olfactives": ["rhum", "miel", "cannelle", "cuir"] },
+  { "marque": "By Kilian", "nom": "Black Phantom", "genre": "mixte", "familles_olfactives": ["gourmand"], "notes_olfactives": ["rhum", "café", "praline", "vanille"] },
+  { "marque": "By Kilian", "nom": "Angels' Share", "genre": "mixte", "familles_olfactives": ["gourmand boisé"], "notes_olfactives": ["cognac", "cannelle", "fève tonka", "chêne"] },
+
+  { "marque": "Clive Christian", "nom": "No. 1", "genre": "mixte", "familles_olfactives": ["floral oriental"], "notes_olfactives": ["agrumes", "jasmin", "rose", "ambre", "musc"] },
+  { "marque": "Clive Christian", "nom": "X for Men", "genre": "homme", "familles_olfactives": ["boisé épicé"], "notes_olfactives": ["mandarine", "épices", "vétiver", "cèdre"] },
+
+  { "marque": "Comme des Garcons", "nom": "Comme des Garçons 2", "genre": "mixte", "familles_olfactives": ["boisé épicé"], "notes_olfactives": ["encens", "coriandre", "bois de cachemire"] },
+  { "marque": "Comme des Garcons", "nom": "Wonderwood", "genre": "homme", "familles_olfactives": ["boisé"], "notes_olfactives": ["bois de cèdre", "pin", "santal fumé"] },
+  { "marque": "Comme des Garcons", "nom": "Odeur 53", "genre": "mixte", "familles_olfactives": ["aromatique atypique"], "notes_olfactives": ["ozone", "métal", "carotte", "silicone"] },
+
+  { "marque": "Elizabeth Arden", "nom": "Green Tea", "genre": "femme", "familles_olfactives": ["hespéridé vert"], "notes_olfactives": ["thé vert", "citron", "menthe", "musc"] },
+  { "marque": "Elizabeth Arden", "nom": "5th Avenue", "genre": "femme", "familles_olfactives": ["floral"], "notes_olfactives": ["muguet", "rose", "violette", "bois de santal"] },
+  { "marque": "Elizabeth Arden", "nom": "Red Door", "genre": "femme", "familles_olfactives": ["floral"], "notes_olfactives": ["rose", "œillet", "ylang-ylang", "santal"] },
+
+  { "marque": "Frederic Malle Editions de Parfums", "nom": "Portrait of a Lady", "genre": "femme", "familles_olfactives": ["chypré oriental"], "notes_olfactives": ["rose", "cannelle", "patchouli", "encens"] },
+  { "marque": "Frederic Malle Editions de Parfums", "nom": "Carnal Flower", "genre": "femme", "familles_olfactives": ["floral blanc"], "notes_olfactives": ["tubéreuse", "eucalyptus", "musc", "noix de coco"] },
+  { "marque": "Frederic Malle Editions de Parfums", "nom": "Musc Ravageur", "genre": "mixte", "familles_olfactives": ["musqué oriental"], "notes_olfactives": ["musc", "cannelle", "ambre", "vanille"] },
+  { "marque": "Frederic Malle Editions de Parfums", "nom": "En Passant", "genre": "femme", "familles_olfactives": ["floral vert"], "notes_olfactives": ["muguet", "concombre", "feuilles vertes"] },
+
+  { "marque": "L'Artisan Parfumeur", "nom": "Mûre et Musc", "genre": "mixte", "familles_olfactives": ["fruité musqué"], "notes_olfactives": ["mûre", "musc", "fruits rouges"] },
+  { "marque": "L'Artisan Parfumeur", "nom": "Dzing!", "genre": "mixte", "familles_olfactives": ["boisé atypique"], "notes_olfactives": ["carton", "cuir", "caramel", "musc"] },
+  { "marque": "L'Artisan Parfumeur", "nom": "Safran Troublant", "genre": "mixte", "familles_olfactives": ["gourmand épicé"], "notes_olfactives": ["safran", "amande", "vanille"] },
+
+  { "marque": "Lalique", "nom": "Encre Noire", "genre": "homme", "familles_olfactives": ["boisé"], "notes_olfactives": ["vétiver", "cyprès", "musc"] },
+  { "marque": "Lalique", "nom": "Lalique de Lalique", "genre": "femme", "familles_olfactives": ["floral"], "notes_olfactives": ["muguet", "jasmin", "bois de santal"] },
+
+  { "marque": "Loewe", "nom": "001", "genre": "mixte", "familles_olfactives": ["aromatique musqué"], "notes_olfactives": ["citron", "cardamome", "musc"] },
+  { "marque": "Loewe", "nom": "Solo Loewe", "genre": "homme", "familles_olfactives": ["aromatique"], "notes_olfactives": ["lavande", "romarin", "bois de cèdre"] },
+  { "marque": "Loewe", "nom": "Aire", "genre": "femme", "familles_olfactives": ["floral vert"], "notes_olfactives": ["magnolia", "iris", "musc"] },
+
+  { "marque": "Louis Vuitton", "nom": "Ombre Nomade", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["oud", "encens", "framboise noire"] },
+  { "marque": "Louis Vuitton", "nom": "Imagination", "genre": "homme", "familles_olfactives": ["hespéridé musqué"], "notes_olfactives": ["citron", "musc", "ambrette"] },
+  { "marque": "Louis Vuitton", "nom": "Spell on You", "genre": "femme", "familles_olfactives": ["floral gourmand"], "notes_olfactives": ["poire", "fleur de tubéreuse", "vanille"] },
+
+  { "marque": "Memo Paris", "nom": "Irish Leather", "genre": "mixte", "familles_olfactives": ["cuir"], "notes_olfactives": ["cuir", "encens", "notes marines"] },
+  { "marque": "Memo Paris", "nom": "Marfa", "genre": "mixte", "familles_olfactives": ["boisé aromatique"], "notes_olfactives": ["lavande", "armoise", "cèdre"] },
+
+  { "marque": "Nasomatto", "nom": "Black Afgano", "genre": "mixte", "familles_olfactives": ["boisé fumé"], "notes_olfactives": ["haschich", "encens", "café", "bois de santal"] },
+  { "marque": "Nasomatto", "nom": "Pardon", "genre": "mixte", "familles_olfactives": ["boisé fumé"], "notes_olfactives": ["fumée", "cuir", "vanille"] },
+
+  { "marque": "Penhaligon's", "nom": "Halfeti", "genre": "mixte", "familles_olfactives": ["floral boisé"], "notes_olfactives": ["rose", "pistache", "cuir"] },
+  { "marque": "Penhaligon's", "nom": "Blenheim Bouquet", "genre": "homme", "familles_olfactives": ["hespéridé aromatique"], "notes_olfactives": ["citron vert", "lavande", "genévrier", "bois de santal"] },
+  { "marque": "Penhaligon's", "nom": "Luna", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["mandarine", "jasmin", "musc"] },
+
+  { "marque": "Roja Dove", "nom": "Elysium", "genre": "homme", "familles_olfactives": ["aromatique boisé"], "notes_olfactives": ["bergamote", "romarin", "vétiver", "ambre"] },
+  { "marque": "Roja Dove", "nom": "Enigma", "genre": "femme", "familles_olfactives": ["floral oriental"], "notes_olfactives": ["rose", "jasmin", "ambre", "vanille"] },
+
+  { "marque": "Serge Lutens", "nom": "Ambre Sultan", "genre": "mixte", "familles_olfactives": ["oriental boisé"], "notes_olfactives": ["ambre", "myrte", "sauge", "résines"] },
+  { "marque": "Serge Lutens", "nom": "Chergui", "genre": "mixte", "familles_olfactives": ["oriental tabac"], "notes_olfactives": ["tabac", "miel", "musc", "bois de santal"] },
+  { "marque": "Serge Lutens", "nom": "Fille en Aiguilles", "genre": "mixte", "familles_olfactives": ["boisé résineux"], "notes_olfactives": ["pin", "encens", "prune"] },
+  { "marque": "Serge Lutens", "nom": "Santal de Mysore", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["santal", "épices", "vanille"] },
+
+  { "marque": "Van Cleef & Arpels", "nom": "First", "genre": "femme", "familles_olfactives": ["floral aldéhydé"], "notes_olfactives": ["aldéhydes", "ylang-ylang", "bois de santal"] },
+  { "marque": "Van Cleef & Arpels", "nom": "Californie", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["mandarine", "fleur d'oranger", "musc"] },
+
+  { "marque": "Zoologist Perfumes", "nom": "Bee", "genre": "mixte", "familles_olfactives": ["floral miellé"], "notes_olfactives": ["miel", "fleurs blanches", "cire d'abeille"] },
+  { "marque": "Zoologist Perfumes", "nom": "Civet", "genre": "mixte", "familles_olfactives": ["animalique"], "notes_olfactives": ["civette", "musc", "cuir"] },
+
+  { "marque": "Etat Libre d'Orange", "nom": "Rossy de Palma", "genre": "femme", "familles_olfactives": ["floral épicé"], "notes_olfactives": ["figue", "poivre rose", "fleur d'oranger"] },
+  { "marque": "Etat Libre d'Orange", "nom": "Like This", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["mandarine", "jasmin", "fève tonka"] },
+
+  { "marque": "Ex Nihilo", "nom": "Fleur Narcotique", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["framboise", "muguet", "musc"] },
+  { "marque": "Ex Nihilo", "nom": "Musc Nomade", "genre": "mixte", "familles_olfactives": ["musqué"], "notes_olfactives": ["musc", "fleur d'oranger", "encens"] },
+
+  { "marque": "Juliette Has A Gun", "nom": "Not a Perfume", "genre": "femme", "familles_olfactives": ["musqué"], "notes_olfactives": ["musc blanc", "ambrette"] },
+  { "marque": "Juliette Has A Gun", "nom": "Lady Vengeance", "genre": "femme", "familles_olfactives": ["floral oriental"], "notes_olfactives": ["fleur d'oranger", "rose", "cassis", "vanille"] },
+
+  { "marque": "Kayali Fragrances", "nom": "Vanilla 28", "genre": "femme", "familles_olfactives": ["gourmand"], "notes_olfactives": ["vanille", "caramel", "musc"] },
+  { "marque": "Kayali Fragrances", "nom": "Musk 12", "genre": "mixte", "familles_olfactives": ["musqué"], "notes_olfactives": ["musc", "vanille", "santal"] },
+
+  { "marque": "Matière Première", "nom": "Falcon Leather", "genre": "mixte", "familles_olfactives": ["cuir"], "notes_olfactives": ["cuir", "iris", "musc"] },
+  { "marque": "Matière Première", "nom": "Bois Longwood", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["cyprès", "bois de santal", "musc"] },
+
+  { "marque": "Vilhelm Parfumerie", "nom": "Poets of Milan", "genre": "mixte", "familles_olfactives": ["gourmand floral"], "notes_olfactives": ["pêche", "jasmin", "santal"] },
+  { "marque": "Vilhelm Parfumerie", "nom": "Dear Polly", "genre": "mixte", "familles_olfactives": ["fruité floral"], "notes_olfactives": ["mûre", "rose", "musc"] },
+
+  { "marque": "Tiziana Terenzi", "nom": "Kirke", "genre": "mixte", "familles_olfactives": ["gourmand fruité"], "notes_olfactives": ["prune", "cacao", "vanille"] },
+  { "marque": "Tiziana Terenzi", "nom": "Andromeda", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["bois de santal", "musc", "ambre"] },
+
+  { "marque": "Orto Parisi", "nom": "Boccanera", "genre": "mixte", "familles_olfactives": ["animalique boisé"], "notes_olfactives": ["cuir", "musc", "bois brûlé"] },
+  { "marque": "Orto Parisi", "nom": "Terroni", "genre": "mixte", "familles_olfactives": ["gourmand épicé"], "notes_olfactives": ["tomate", "basilic", "musc"] },
+
+  { "marque": "Goldfield & Banks Australia", "nom": "Wood Therapy", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["bois de santal", "cèdre", "vétiver"] },
+
+  { "marque": "BDK Parfums", "nom": "Rouge Smoking", "genre": "mixte", "familles_olfactives": ["oriental fumé"], "notes_olfactives": ["prune", "tabac", "fumée", "cuir"] },
+  { "marque": "BDK Parfums", "nom": "Gris Charnel", "genre": "mixte", "familles_olfactives": ["boisé poudré"], "notes_olfactives": ["iris", "cardamome", "santal"] },
+
+  { "marque": "Essential Parfums", "nom": "Bois Impérial", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["cèdre", "cardamome", "musc"] },
+
+  { "marque": "Phlur", "nom": "Missing Person", "genre": "mixte", "familles_olfactives": ["musqué gourmand"], "notes_olfactives": ["musc", "vanille", "ambre"] },
+
+  { "marque": "Moschino", "nom": "Toy 2", "genre": "femme", "familles_olfactives": ["floral musqué"], "notes_olfactives": ["poire", "pivoine", "musc blanc"] },
+  { "marque": "Moschino", "nom": "Fresh Couture", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["poire", "muguet", "musc"] },
+
+  { "marque": "Lush", "nom": "Karma", "genre": "mixte", "familles_olfactives": ["oriental épicé"], "notes_olfactives": ["patchouli", "pamplemousse", "cannelle", "encens"] },
+
+  { "marque": "Casamorati 1888", "nom": "Fiore d'Ulivo", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["fleur d'olivier", "pêche", "fleur d'oranger"] },
+
+  { "marque": "Ariana Grande", "nom": "Cloud", "genre": "femme", "familles_olfactives": ["gourmand floral"], "notes_olfactives": ["praline", "fleur de coco", "lavande", "musc"] },
+  { "marque": "Ariana Grande", "nom": "Thank U, Next", "genre": "femme", "familles_olfactives": ["gourmand fruité"], "notes_olfactives": ["pomme", "sucre filé", "amande", "musc"] },
+
+  { "marque": "Britney Spears", "nom": "Fantasy", "genre": "femme", "familles_olfactives": ["fruité gourmand"], "notes_olfactives": ["litchi", "kiwi", "jasmin", "crème"] },
+  { "marque": "Britney Spears", "nom": "Curious", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["pêche louisiane", "magnolia", "musc", "bois de santal"] },
+
+  { "marque": "Victoria's Secret", "nom": "Bombshell", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["passion", "pêche", "pivoine", "orchidée"] },
+  { "marque": "Victoria's Secret", "nom": "Love Spell", "genre": "femme", "familles_olfactives": ["fruité floral"], "notes_olfactives": ["pêche", "fleur de cerisier", "vanille"] },
+
+  { "marque": "Sol de Janeiro", "nom": "Cheirosa 62", "genre": "femme", "familles_olfactives": ["gourmand fruité"], "notes_olfactives": ["pistache", "vanille", "fleur de pêcher", "caramel"] },
+
+  { "marque": "Lattafa Perfumes", "nom": "Khamrah", "genre": "mixte", "familles_olfactives": ["gourmand épicé"], "notes_olfactives": ["cannelle", "datte", "cardamome", "vanille"] },
+  { "marque": "Lattafa Perfumes", "nom": "Yara", "genre": "femme", "familles_olfactives": ["gourmand fruité"], "notes_olfactives": ["pêche", "fruits tropicaux", "vanille", "caramel"] },
+  { "marque": "Lattafa Perfumes", "nom": "Asad", "genre": "homme", "familles_olfactives": ["oriental épicé"], "notes_olfactives": ["pomme", "cannelle", "ambre", "musc"] },
+
+  { "marque": "Armaf", "nom": "Club de Nuit Intense Man", "genre": "homme", "familles_olfactives": ["chypré fruité"], "notes_olfactives": ["ananas", "pomme", "bouleau", "musc"] },
+
+  { "marque": "Rasasi", "nom": "Hawas", "genre": "homme", "familles_olfactives": ["aromatique aquatique"], "notes_olfactives": ["pomme", "notes marines", "épices", "musc"] },
+
+  { "marque": "Al Haramain Perfumes", "nom": "Amber Oud", "genre": "mixte", "familles_olfactives": ["boisé ambré"], "notes_olfactives": ["ambre", "oud", "vanille"] }
 ]

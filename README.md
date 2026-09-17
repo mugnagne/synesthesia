@@ -27,12 +27,14 @@ licence commerciale explicite), ou générer notre propre base à partir de la c
 générale de Claude sur les parfums réels et leurs notes publiquement connues.
 
 Pour cette v1, on a choisi la seconde option (gratuite, immédiate) : `data/perfumes.json`
-contient actuellement **195 parfums réels sur 52 maisons**, rédigés directement à la main (par
+contient actuellement **277 parfums réels sur 91 maisons**, rédigés directement à la main (par
 Claude, dans une session Claude Code — donc sans consommer de crédit API séparé) plutôt que
-générés en appelant l'API. Limite connue : fiable sur les parfums connus des grandes maisons,
-moins fiable sur le très niche (c'est de la mémoire de modèle, pas une base vérifiée). Si le
-produit prend, migrer vers un jeu de données licencié (comme FragDB) est le prochain palier de
-qualité.
+générés en appelant l'API. Couverture volontairement inégale : dense sur les maisons de luxe et
+niche (Chanel, Dior, Guerlain, Le Labo, Byredo, Serge Lutens...) où la connaissance du modèle est
+fiable, plus légère sur le grand public/célébrités (quelques flagships connus seulement), et
+volontairement absente sur la plupart des marques "dupe"/moyen-orientales dont je ne connais pas
+le catalogue avec assez de précision pour ne pas inventer. Si le produit prend, migrer vers un
+jeu de données licencié (comme FragDB) est le prochain palier de qualité et de couverture.
 
 `scripts/generate-perfumes.ts` (et le workflow GitHub Actions associé) restent disponibles comme
 méthode alternative pour étoffer la base via l'API Anthropic si on veut automatiser une montée en
