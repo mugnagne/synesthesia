@@ -1,12 +1,392 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Système. Trois couleurs, une échelle 8pt, un seul radius, une seule règle.
+   Toute valeur de marge, padding ou gap vient de l'échelle. Pas d'exception.
+--------------------------------------------------------------------------- */
+
 :root {
-  --background: #f7f2ea;
-  --foreground: #2a2420;
-  --accent: #b3702c;
+  --paper: #ffffff;
+  --ink: #0a0a0a;
+  --ultramarine: #1200e8;
+
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 32px;
+  --s5: 48px;
+  --s6: 64px;
+  --s7: 96px;
+  --s8: 128px;
+
+  --radius: 0px;
+  --rule: 1px solid var(--ink);
+  --rule-faint: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+
+  --gutter: var(--s2);
+  --measure: 34rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: var(--s5);
+  }
+}
+
+*,
+*::before,
+*::after {
+  border-radius: var(--radius);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Grain pixelisé, fixe, non interactif. Généré, pas d'image à charger. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='48' height='48' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 144px 144px;
+  image-rendering: pixelated;
+}
+
+/* --- Typographie ---------------------------------------------------------- */
+
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.75rem, 13vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.625rem, 7vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.wall-text {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.125rem, 4.5vw, 1.5rem);
+  line-height: 1.4;
+  margin: 0;
+  max-width: var(--measure);
+}
+
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.label-blue {
+  color: var(--ultramarine);
+}
+
+.body {
+  margin: 0;
+  max-width: var(--measure);
+}
+
+.small {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- Structure ------------------------------------------------------------ */
+
+.shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s2) var(--gutter);
+  border-bottom: var(--rule);
+}
+
+.wordmark {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.main {
+  flex: 1;
+}
+
+.band {
+  padding: var(--s5) var(--gutter);
+  border-bottom: var(--rule);
+}
+
+.band-blue {
+  background: var(--ultramarine);
+  color: var(--paper);
+}
+
+.band-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+}
+
+@media (min-width: 64rem) {
+  .band {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--s5);
+    padding: var(--s6) var(--gutter);
+  }
+
+  .band-head {
+    margin-bottom: 0;
+    flex-direction: column;
+    gap: var(--s1);
+  }
+}
+
+/* --- Champ de saisie ------------------------------------------------------ */
+
+.field {
+  display: block;
+  width: 100%;
+  max-width: 44rem;
+  box-sizing: border-box;
+  padding: var(--s2);
+  border: var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: none;
+}
+
+.field::placeholder {
+  color: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+
+.field:focus-visible {
+  outline: 2px solid var(--ultramarine);
+  outline-offset: 2px;
+}
+
+.btn {
+  display: inline-block;
+  padding: var(--s2) var(--s3);
+  border: var(--rule);
+  background: var(--ultramarine);
+  color: var(--paper);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 120ms linear, color 120ms linear;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--ink);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ultramarine);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  background: var(--paper);
+  color: color-mix(in srgb, var(--ink) 45%, transparent);
+  cursor: not-allowed;
+}
+
+.btn-quiet {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ultramarine);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.btn-quiet:hover:not(:disabled) {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* --- Listes de résultats -------------------------------------------------- */
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 44rem;
+  border-top: var(--rule-faint);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s2) 0;
+  border-bottom: var(--rule-faint);
+}
+
+.row-stack {
+  display: block;
+  padding: var(--s2) 0;
+  border-bottom: var(--rule-faint);
+}
+
+.notes {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
+  line-height: 1.25;
+  margin: 0;
+  max-width: 44rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: var(--s1);
+  border: var(--rule);
+}
+
+/* Intensité en blocs pleins. Cinq carrés, pas de barre dégradée. */
+.blocks {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.block {
+  width: 8px;
+  height: 8px;
+  border: 1px solid currentColor;
+}
+
+.block-on {
+  background: var(--ultramarine);
+  border-color: var(--ultramarine);
+}
+
+.band-blue .block-on {
+  background: var(--paper);
+  border-color: var(--paper);
+}
+
+/* --- Chargement ----------------------------------------------------------- */
+
+.skeleton {
+  border: var(--rule-faint);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+
+  .btn,
+  .link {
+    transition: none;
+  }
+}
+
+/* --- Liens ---------------------------------------------------------------- */
+
+.link {
+  color: var(--ultramarine);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 120ms linear;
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+/* Sur fond ultramarine, tout ce qui était ultramarine passe en papier. */
+.band-blue .link,
+.band-blue .label-blue,
+.band-blue .btn-quiet {
+  color: var(--paper);
+}
+
+.band-blue .btn-quiet:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.link:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--ultramarine);
+  outline-offset: 2px;
+}
+
+.band-blue .link:focus-visible {
+  outline-color: var(--paper);
+}
+
+/* --- Erreur --------------------------------------------------------------- */
+
+.notice {
+  padding: var(--s2);
+  border: var(--rule);
+  border-left: 8px solid var(--ultramarine);
+  max-width: var(--measure);
 }

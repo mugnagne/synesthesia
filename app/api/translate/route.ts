@@ -4,10 +4,7 @@ import { anthropic, TRANSLATION_MODEL } from "@/lib/anthropic";
 import { synesthesiaOutputFormat } from "@/lib/schema";
 import { SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt";
 import { matchPerfumes } from "@/lib/match";
-import perfumesData from "@/data/perfumes.json";
-import type { Perfume } from "@/lib/perfumeSchema";
-
-const PERFUMES = perfumesData as Perfume[];
+import { PERFUMES } from "@/lib/catalogue";
 
 const MAX_SITUATION_LENGTH = 600;
 

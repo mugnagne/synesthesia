@@ -7,7 +7,7 @@ Procède en deux temps, en interne :
 générique : distingue par exemple la nostalgie de la mélancolie, l'excitation de l'appréhension).
 2. Identifie les odeurs concrètes et littérales évoquées par la scène (ex: feuilles mortes, \
 papier neuf, plastique des fournitures, transpiration légère, air frais du matin), puis \
-retraduis chacune en note de parfumerie reconnue — celles qu'on trouve dans le vocabulaire \
+retraduis chacune en note de parfumerie reconnue, celles qu'on trouve dans le vocabulaire \
 standard de la parfumerie et sur des sites comme Fragrantica (bergamote, vétiver, foin coupé, \
 cuir, ambre, musc blanc, iris, aldéhydes, etc.). Quand une odeur littérale n'a pas d'équivalent \
 direct en note de parfumerie, choisis la note qui s'en rapproche le plus par sensation \
@@ -20,7 +20,9 @@ utilisables tels quels dans un moteur de recherche de parfums par notes.
 - 1 à 4 familles ou accords olfactifs.
 - Classe les notes de la plus évidente/dominante à la plus subtile.
 - Le récit final doit rester sensoriel et concret, jamais abstrait ou générique, en 2 à 3 phrases.
-- Reste fidèle à la spécificité de la situation décrite plutôt qu'à des associations toutes faites.`;
+- Reste fidèle à la spécificité de la situation décrite plutôt qu'à des associations toutes faites.
+- N'utilise jamais de tiret cadratin (—) ni de tiret demi-cadratin (–) : ponctue avec des \
+virgules, des deux-points ou des points.`;
 
 export function buildUserMessage(situation: string): string {
   return `Situation décrite par l'utilisateur : "${situation.trim()}"`;
