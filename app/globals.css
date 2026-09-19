@@ -132,6 +132,104 @@ body {
   flex-direction: column;
 }
 
+/* --- Hero vidéo ------------------------------------------------------------
+   Plein écran, la vidéo en fond, le texte au-dessus. Le scrim est un simple
+   noir en dégradé (pas de couleur ajoutée : le bleu vient déjà du métrage). */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 26rem;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: var(--rule);
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ink) 55%, transparent) 0%,
+    color-mix(in srgb, var(--ink) 10%, transparent) 32%,
+    color-mix(in srgb, var(--ink) 25%, transparent) 68%,
+    color-mix(in srgb, var(--ink) 80%, transparent) 100%
+  );
+}
+
+.hero-chrome {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s2) var(--gutter);
+}
+
+.hero-chrome .wordmark,
+.hero-chrome .label {
+  color: var(--paper);
+}
+
+.hero-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s3);
+  padding: 0 var(--gutter) var(--s5);
+  height: calc(100% - var(--s6));
+  justify-content: flex-end;
+}
+
+.hero-title {
+  color: var(--paper);
+  max-width: 20ch;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--paper) 55%, transparent);
+  padding-bottom: 2px;
+  transition: border-color 120ms linear;
+}
+
+.hero-cta:hover {
+  border-color: var(--paper);
+}
+
+.hero-cta:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta {
+    transition: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  .hero-body {
+    padding-bottom: var(--s7);
+  }
+}
+
 .bar {
   display: flex;
   align-items: baseline;

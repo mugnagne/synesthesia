@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { SynesthesiaResult } from "@/lib/schema";
 import type { MatchedPerfume } from "@/lib/match";
 import { CURRENT_EXAMPLE } from "@/lib/examples";
@@ -33,6 +33,62 @@ function BandHead({ index, title }: { index: string; title: string }) {
       <p className="label label-blue">{index}</p>
       <p className="label">{title}</p>
     </div>
+  );
+}
+
+function VideoHero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+    const saveData = nav.connection?.saveData ?? false;
+
+    if (reducedMotion || saveData) {
+      video.pause();
+      video.removeAttribute("autoplay");
+    }
+  }, []);
+
+  return (
+    <section className="hero">
+      <video
+        ref={videoRef}
+        className="hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/video/crash-bg-poster.jpg"
+      >
+        <source src="/video/crash-bg-mobile.mp4" media="(max-width: 40rem)" type="video/mp4" />
+        <source src="/video/crash-bg.mp4" type="video/mp4" />
+      </video>
+      <div className="hero-scrim" aria-hidden="true" />
+
+      <div className="hero-chrome">
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--s1)" }}>
+          <Blocks filled={3} />
+          <span className="wordmark">Synesthésie</span>
+        </span>
+        <p className="label">001 — 006</p>
+      </div>
+
+      <div className="hero-body">
+        <p className="display hero-title">
+          Une situation.
+          <br />
+          Un parfum.
+        </p>
+        <a className="label hero-cta" href="#situation-form">
+          Traduire la vôtre ↓
+        </a>
+      </div>
+    </section>
   );
 }
 
@@ -93,15 +149,10 @@ export default function Translator({
 
   return (
     <div className="shell">
-      <header className="bar">
-        <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--s1)" }}>
-          <Blocks filled={3} />
-          <span className="wordmark">Synesthésie</span>
-        </span>
-      </header>
+      <VideoHero />
 
       <main className="main">
-        <section className="band">
+        <section className="band" id="situation-form">
           <BandHead index="001" title="Situation" />
           <form onSubmit={handleSubmit}>
             <p className="body small" style={{ marginBottom: "var(--s3)" }}>
