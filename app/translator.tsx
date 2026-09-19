@@ -36,6 +36,103 @@ function BandHead({ index, title }: { index: string; title: string }) {
   );
 }
 
+type VideoTier = "hd" | "sd" | "mobile";
+
+// Charge la meilleure définition que l'appareil et la connexion peuvent
+// raisonnablement tenir, plutôt qu'une seule vidéo pour tout le monde.
+function chooseVideoTier(): VideoTier {
+  if (window.innerWidth < 640) return "mobile";
+
+  const nav = navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+    deviceMemory?: number;
+  };
+  const connection = nav.connection;
+  if (connection?.saveData) return "mobile";
+  if (connection?.effectiveType && ["slow-2g", "2g", "3g"].includes(connection.effectiveType)) {
+    return "mobile";
+  }
+
+  const memory = nav.deviceMemory ?? 8;
+  const cores = nav.hardwareConcurrency ?? 8;
+  if (memory <= 2 || cores <= 2) return "sd";
+  return "hd";
+}
+
+const ASCII_TARGET = "SYNESTHESIA";
+const ASCII_GLYPHS = "!@#$%&*_/\\|<>[]{}=+-?01XY";
+
+function randomGlyph() {
+  return ASCII_GLYPHS[Math.floor(Math.random() * ASCII_GLYPHS.length)];
+}
+
+function AsciiTitle() {
+  const [frame, setFrame] = useState<string[]>(() => ASCII_TARGET.split(""));
+  const [replayKey, setReplayKey] = useState(0);
+  const ref = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setFrame(ASCII_TARGET.split(""));
+      return;
+    }
+
+    let cancelled = false;
+    let raf = 0;
+
+    function scramble() {
+      const total = ASCII_TARGET.length;
+      const start = performance.now();
+      const duration = 900;
+      const lockDelay = duration / total;
+
+      function tick(now: number) {
+        if (cancelled) return;
+        const lockedCount = Math.min(total, Math.floor((now - start) / lockDelay));
+        setFrame(ASCII_TARGET.split("").map((ch, i) => (i < lockedCount ? ch : randomGlyph())));
+        if (lockedCount < total) raf = requestAnimationFrame(tick);
+      }
+      raf = requestAnimationFrame(tick);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) scramble();
+      },
+      { threshold: 0.6 }
+    );
+    observer.observe(el);
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
+  }, [replayKey]);
+
+  return (
+    <h1
+      ref={ref}
+      className="hero-ascii"
+      role="button"
+      tabIndex={0}
+      aria-label={ASCII_TARGET}
+      onClick={() => setReplayKey((k) => k + 1)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setReplayKey((k) => k + 1);
+        }
+      }}
+    >
+      {frame.join("")}
+    </h1>
+  );
+}
+
 function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -43,14 +140,11 @@ function VideoHero() {
     const video = videoRef.current;
     if (!video) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-    const saveData = nav.connection?.saveData ?? false;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    if (reducedMotion || saveData) {
-      video.pause();
-      video.removeAttribute("autoplay");
-    }
+    video.src = `/video/crash-bg-${chooseVideoTier()}.mp4`;
+    video.load();
+    video.play().catch(() => {});
   }, []);
 
   return (
@@ -58,16 +152,12 @@ function VideoHero() {
       <video
         ref={videoRef}
         className="hero-video"
-        autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         poster="/video/crash-bg-poster.jpg"
-      >
-        <source src="/video/crash-bg-mobile.mp4" media="(max-width: 40rem)" type="video/mp4" />
-        <source src="/video/crash-bg.mp4" type="video/mp4" />
-      </video>
+      />
       <div className="hero-scrim" aria-hidden="true" />
 
       <div className="hero-chrome">
@@ -79,15 +169,52 @@ function VideoHero() {
       </div>
 
       <div className="hero-body">
-        <p className="display hero-title">
-          Une situation.
-          <br />
-          Un parfum.
-        </p>
+        <AsciiTitle />
         <a className="label hero-cta" href="#situation-form">
-          Traduire la vôtre ↓
+          Traduire une situation <span className="hero-cta-arrow">↓</span>
         </a>
       </div>
+    </section>
+  );
+}
+
+function Reveal({
+  className = "",
+  id,
+  children,
+}: {
+  className?: string;
+  id?: string;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} id={id} className={`${className} reveal${visible ? " reveal-in" : ""}`}>
+      {children}
     </section>
   );
 }
@@ -152,7 +279,7 @@ export default function Translator({
       <VideoHero />
 
       <main className="main">
-        <section className="band" id="situation-form">
+        <Reveal className="band" id="situation-form">
           <BandHead index="001" title="Situation" />
           <form onSubmit={handleSubmit}>
             <p className="body small" style={{ marginBottom: "var(--s3)" }}>
@@ -189,10 +316,10 @@ export default function Translator({
               </p>
             </div>
           </form>
-        </section>
+        </Reveal>
 
         {!result && !loading && !error && (
-          <section className="band">
+          <Reveal className="band">
             <BandHead index="000" title="Index" />
             <ul className="rows">
               {INDEX.map(([n, titre, description]) => (
@@ -206,7 +333,7 @@ export default function Translator({
                 </li>
               ))}
             </ul>
-          </section>
+          </Reveal>
         )}
 
         <div aria-live="polite">
@@ -230,7 +357,7 @@ export default function Translator({
 
           {result && (
             <>
-              <section className="band">
+              <Reveal className="band">
                 <BandHead index="002" title="Émotions" />
                 <ul className="rows">
                   {result.emotions.map((emotion) => (
@@ -240,9 +367,9 @@ export default function Translator({
                     </li>
                   ))}
                 </ul>
-              </section>
+              </Reveal>
 
-              <section className="band band-blue">
+              <Reveal className="band band-blue">
                 <BandHead index="003" title="Notes olfactives" />
                 <div>
                   <p className="notes">{result.notes_olfactives.join(", ")}</p>
@@ -254,7 +381,11 @@ export default function Translator({
                       marginTop: "var(--s3)",
                     }}
                   >
-                    <button type="button" className="btn btn-quiet label" onClick={copyNotes}>
+                    <button
+                      type="button"
+                      className={`btn btn-quiet label${copied ? " is-copied" : ""}`}
+                      onClick={copyNotes}
+                    >
                       {copied ? "Copié" : "Copier la liste"}
                     </button>
                     <a
@@ -267,9 +398,9 @@ export default function Translator({
                     </a>
                   </div>
                 </div>
-              </section>
+              </Reveal>
 
-              <section className="band">
+              <Reveal className="band">
                 <BandHead index="004" title="Familles" />
                 <ul className="tags">
                   {result.familles_olfactives.map((famille) => (
@@ -278,9 +409,9 @@ export default function Translator({
                     </li>
                   ))}
                 </ul>
-              </section>
+              </Reveal>
 
-              <section className="band">
+              <Reveal className="band">
                 <BandHead index="005" title="Parfums" />
                 {parfums.length > 0 ? (
                   <ul className="rows">
@@ -304,19 +435,19 @@ export default function Translator({
                     du bloc 003 reste utilisable pour chercher plus large.
                   </p>
                 )}
-              </section>
+              </Reveal>
 
-              <section className="band">
+              <Reveal className="band">
                 <BandHead index="006" title="Le lien" />
                 <p className="wall-text">{result.recit}</p>
-              </section>
+              </Reveal>
             </>
           )}
         </div>
       </main>
 
       <footer className="bar" style={{ borderBottom: 0 }}>
-        <p className="label">Synesthésie, 2026</p>
+        <p className="label">Camille - 2026</p>
         <p className="label">
           {perfumeCount} parfums, {brandCount} maisons
         </p>
