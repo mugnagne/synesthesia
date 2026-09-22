@@ -4,9 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import type { SynesthesiaResult } from "@/lib/schema";
 import type { MatchedPerfume } from "@/lib/match";
 import { CURRENT_EXAMPLE } from "@/lib/examples";
+import { type GenreFilter } from "@/lib/perfumeSchema";
 
 const FRAGRANTICA_NOTE_SEARCH = "https://www.fragrantica.fr/search-notes/";
 const MAX_LENGTH = 600;
+
+const GENRE_OPTIONS: [GenreFilter, string][] = [
+  ["tout", "Tout"],
+  ["homme", "Homme"],
+  ["femme", "Femme"],
+  ["mixte", "Unisexe"],
+];
 
 const INDEX: [string, string, string][] = [
   ["002", "Émotions", "Ce que la scène contient, et à quelle intensité."],
@@ -227,6 +235,7 @@ export default function Translator({
   brandCount: number;
 }) {
   const [situation, setSituation] = useState("");
+  const [genre, setGenre] = useState<GenreFilter>("tout");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<SynesthesiaResult | null>(null);
@@ -247,7 +256,7 @@ export default function Translator({
       const res = await fetch("/api/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ situation }),
+        body: JSON.stringify({ situation, genre }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -298,6 +307,26 @@ export default function Translator({
               rows={4}
               maxLength={MAX_LENGTH}
             />
+
+            <div style={{ marginTop: "var(--s3)" }}>
+              <p className="label" style={{ marginBottom: "var(--s1)" }}>
+                Genre
+              </p>
+              <div className="segmented" role="radiogroup" aria-label="Filtrer les parfums par genre">
+                {GENRE_OPTIONS.map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    role="radio"
+                    aria-checked={genre === value}
+                    className={`segmented-option label${genre === value ? " is-active" : ""}`}
+                    onClick={() => setGenre(value)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
             <div
               style={{

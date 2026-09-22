@@ -405,6 +405,45 @@ body {
   cursor: not-allowed;
 }
 
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: var(--rule);
+}
+
+.segmented-option {
+  padding: var(--s1) var(--s2);
+  border: 0;
+  border-right: var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  cursor: pointer;
+  transition: background-color 120ms linear, color 120ms linear, transform 100ms ease;
+}
+
+.segmented-option:last-child {
+  border-right: 0;
+}
+
+.segmented-option:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+.segmented-option.is-active {
+  background: var(--ultramarine);
+  color: var(--paper);
+}
+
+.segmented-option:active {
+  transform: scale(0.96);
+}
+
+.segmented-option:focus-visible {
+  outline: 2px solid var(--ultramarine);
+  outline-offset: -2px;
+}
+
 .btn-quiet {
   padding: 0;
   border: 0;
@@ -534,6 +573,7 @@ body {
 
   .btn,
   .btn-quiet,
+  .segmented-option,
   .link {
     transition: none;
   }

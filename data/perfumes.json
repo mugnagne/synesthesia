@@ -722,5 +722,35 @@
 
   { "marque": "Montale", "nom": "Roses Musk", "genre": "femme", "familles_olfactives": ["floral musqué"], "notes_olfactives": ["rose", "musc blanc", "patchouli", "ambre"] },
 
-  { "marque": "Acqua di Parma", "nom": "Magnolia Nobile", "genre": "femme", "familles_olfactives": ["floral"], "notes_olfactives": ["magnolia", "bergamote", "patchouli", "vanille", "vétiver"] }
+  { "marque": "Acqua di Parma", "nom": "Magnolia Nobile", "genre": "femme", "familles_olfactives": ["floral"], "notes_olfactives": ["magnolia", "bergamote", "patchouli", "vanille", "vétiver"] },
+
+  { "marque": "Maison Margiela", "nom": "Replica By the Fireplace", "genre": "mixte", "familles_olfactives": ["gourmand boisé"], "notes_olfactives": ["châtaigne grillée", "clou de girofle", "vanille", "bois de gaïac", "cade"] },
+  { "marque": "Maison Margiela", "nom": "Replica Jazz Club", "genre": "mixte", "familles_olfactives": ["boisé épicé"], "notes_olfactives": ["rhum", "feuille de tabac", "vanille", "ciste"] },
+  { "marque": "Maison Margiela", "nom": "Replica Beach Walk", "genre": "mixte", "familles_olfactives": ["floral marin"], "notes_olfactives": ["noix de coco", "ylang-ylang", "cèdre", "musc"] },
+  { "marque": "Maison Margiela", "nom": "Replica Under the Lemon Trees", "genre": "mixte", "familles_olfactives": ["hespéridé"], "notes_olfactives": ["citron", "mandarine", "petit grain", "cèdre"] },
+  { "marque": "Maison Margiela", "nom": "Replica Lazy Sunday Morning", "genre": "mixte", "familles_olfactives": ["poudré musqué"], "notes_olfactives": ["musc blanc", "iris", "muguet", "bois clairs"] },
+  { "marque": "Maison Margiela", "nom": "Replica At the Barber's", "genre": "mixte", "familles_olfactives": ["aromatique poudré"], "notes_olfactives": ["lavande", "sauge sclarée", "racine d'iris", "fève tonka", "musc"] },
+  { "marque": "Maison Margiela", "nom": "Replica Whispers in the Library", "genre": "mixte", "familles_olfactives": ["boisé"], "notes_olfactives": ["papyrus", "thé noir", "bois précieux"] },
+  { "marque": "Maison Margiela", "nom": "Replica Coffee Break", "genre": "mixte", "familles_olfactives": ["gourmand"], "notes_olfactives": ["café", "cardamome", "fève tonka", "musc"] },
+  { "marque": "Maison Margiela", "nom": "Replica Sailing Day", "genre": "mixte", "familles_olfactives": ["marin boisé"], "notes_olfactives": ["notes marines", "cèdre", "musc", "sel marin"] },
+  { "marque": "Maison Margiela", "nom": "Replica Music Festival", "genre": "mixte", "familles_olfactives": ["floral boisé"], "notes_olfactives": ["mandarine", "accord cannabis", "fleur d'oranger", "bois de gaïac"] },
+  { "marque": "Maison Margiela", "nom": "Replica Flower Market", "genre": "mixte", "familles_olfactives": ["floral"], "notes_olfactives": ["jasmin", "tubéreuse", "mimosa", "hedione"] },
+  { "marque": "Maison Margiela", "nom": "Replica Bubble Bath", "genre": "mixte", "familles_olfactives": ["musqué poudré"], "notes_olfactives": ["musc de coton", "iris", "bergamote"] },
+  { "marque": "Maison Margiela", "nom": "Replica Matcha Meditation", "genre": "mixte", "familles_olfactives": ["vert boisé"], "notes_olfactives": ["thé matcha", "poivre noir", "feuille de figuier", "cèdre"] },
+  { "marque": "Maison Margiela", "nom": "Replica Springtime in a Park", "genre": "mixte", "familles_olfactives": ["floral vert"], "notes_olfactives": ["freesia", "jacinthe", "mousse"] },
+  { "marque": "Maison Margiela", "nom": "Replica On a Date", "genre": "mixte", "familles_olfactives": ["floral poudré"], "notes_olfactives": ["vanille", "poivre rose", "iris", "jasmin"] },
+  { "marque": "Maison Margiela", "nom": "Replica Snow Walk", "genre": "mixte", "familles_olfactives": ["ambré boisé"], "notes_olfactives": ["ambre", "bouleau", "accord glacé"] },
+  { "marque": "Maison Margiela", "nom": "Replica Autumn Vibes", "genre": "mixte", "familles_olfactives": ["boisé fruité"], "notes_olfactives": ["patchouli", "pomme", "cèdre"] },
+  { "marque": "Maison Margiela", "nom": "Replica Funfair Evening", "genre": "mixte", "familles_olfactives": ["gourmand"], "notes_olfactives": ["barbe à papa", "pop-corn", "rhum sombre"] },
+  { "marque": "Parfums de Marly", "nom": "Layton Exclusif", "genre": "homme", "familles_olfactives": ["aromatique fougère"], "notes_olfactives": ["pomme", "jasmin", "vanille", "fève tonka"] },
+  { "marque": "Parfums de Marly", "nom": "Percival", "genre": "homme", "familles_olfactives": ["aromatique marin"], "notes_olfactives": ["notes marines", "ambroxan", "pomme", "musc"] },
+  { "marque": "Parfums de Marly", "nom": "Galloway", "genre": "homme", "familles_olfactives": ["aromatique boisé"], "notes_olfactives": ["lavande", "cardamome", "vétiver", "fève tonka"] },
+  { "marque": "Parfums de Marly", "nom": "Kalan", "genre": "homme", "familles_olfactives": ["boisé épicé"], "notes_olfactives": ["safran", "cèdre", "ambre"] },
+  { "marque": "Parfums de Marly", "nom": "Greenley", "genre": "homme", "familles_olfactives": ["hespéridé boisé"], "notes_olfactives": ["citron", "pomme verte", "musc"] },
+  { "marque": "Parfums de Marly", "nom": "Carlisle", "genre": "homme", "familles_olfactives": ["oriental boisé"], "notes_olfactives": ["orange sanguine", "bergamote", "oud", "cuir"] },
+  { "marque": "Parfums de Marly", "nom": "Delina Exclusif", "genre": "femme", "familles_olfactives": ["floral fruité"], "notes_olfactives": ["ylang-ylang", "litchi", "rose turque", "musc", "bois de cachemire"] },
+  { "marque": "Parfums de Marly", "nom": "Delina La Rosée", "genre": "femme", "familles_olfactives": ["floral fruité frais"], "notes_olfactives": ["poire", "rhubarbe", "rose", "musc blanc"] },
+  { "marque": "Parfums de Marly", "nom": "Valaya", "genre": "femme", "familles_olfactives": ["oriental floral"], "notes_olfactives": ["vanille", "fleur d'oranger", "jasmin", "santal"] },
+  { "marque": "Parfums de Marly", "nom": "Oriana", "genre": "femme", "familles_olfactives": ["floral oriental"], "notes_olfactives": ["mandarine", "rose", "vanille", "santal"] },
+  { "marque": "Parfums de Marly", "nom": "Meliora", "genre": "femme", "familles_olfactives": ["floral chypré"], "notes_olfactives": ["rose", "patchouli", "vanille"] }
 ]

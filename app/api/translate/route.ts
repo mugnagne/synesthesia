@@ -6,8 +6,15 @@ import { SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt";
 import { matchPerfumes } from "@/lib/match";
 import { PERFUMES } from "@/lib/catalogue";
 import { logTranslation } from "@/lib/db";
+import { GENRE_FILTERS, type GenreFilter } from "@/lib/perfumeSchema";
 
 const MAX_SITUATION_LENGTH = 600;
+
+function parseGenre(value: unknown): GenreFilter {
+  return typeof value === "string" && (GENRE_FILTERS as readonly string[]).includes(value)
+    ? (value as GenreFilter)
+    : "tout";
+}
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -31,6 +38,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const genre = parseGenre((body as { genre?: unknown })?.genre);
+
   try {
     const response = await anthropic.messages.parse({
       model: TRANSLATION_MODEL,
@@ -49,7 +58,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const parfums_suggeres = matchPerfumes(response.parsed_output, PERFUMES);
+    const pool = genre === "tout" ? PERFUMES : PERFUMES.filter((p) => p.genre === genre);
+    const parfums_suggeres = matchPerfumes(response.parsed_output, pool);
 
     // Runs after the response is sent, not racing it — a bare unawaited
     // promise risks the serverless runtime freezing before the write lands.

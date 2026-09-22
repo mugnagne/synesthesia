@@ -13,6 +13,11 @@ export const PerfumeSchema = z.object({
 
 export type Perfume = z.infer<typeof PerfumeSchema>;
 
+// Filtre de genre exposé côté formulaire : "tout" en plus des trois valeurs
+// réelles du catalogue (mixte = unisexe côté UI).
+export const GENRE_FILTERS = ["tout", "homme", "femme", "mixte"] as const;
+export type GenreFilter = (typeof GENRE_FILTERS)[number];
+
 export const PerfumeBatchSchema = z.object({
   parfums: z.array(PerfumeSchema),
 });
