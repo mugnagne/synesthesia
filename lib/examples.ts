@@ -14,6 +14,21 @@ export const EXAMPLES = [
   "S'endormir dans une voiture au retour de vacances.",
 ];
 
-export const CURRENT_EXAMPLE_INDEX = 4;
+// Même liste, même ordre, pour le sélecteur de langue (voir lib/i18n.ts).
+export const EXAMPLES_EN = [
+  "The first day back at school when you're 8 years old.",
+  "The first day of summer vacation, suitcase barely put down.",
+  "A rainy Sunday spent in bed with a good book.",
+  "Blowing out your birthday candles surrounded by family.",
+  "Coming home after a long trip.",
+  "The first snow of winter, watched from the window.",
+  "A campfire on the beach, at the end of summer.",
+  "Running into a childhood friend after years apart.",
+  "The Saturday morning market, still half asleep.",
+  "Falling asleep in the car on the way back from vacation.",
+];
+
+export const CURRENT_EXAMPLE_INDEX = 5;
 
 export const CURRENT_EXAMPLE = EXAMPLES[CURRENT_EXAMPLE_INDEX];
+export const CURRENT_EXAMPLE_EN = EXAMPLES_EN[CURRENT_EXAMPLE_INDEX];

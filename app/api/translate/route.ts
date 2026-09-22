@@ -4,11 +4,17 @@ import { anthropic, TRANSLATION_MODEL } from "@/lib/anthropic";
 import { synesthesiaOutputFormat } from "@/lib/schema";
 import { SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt";
 import { matchPerfumes } from "@/lib/match";
-import { PERFUMES } from "@/lib/catalogue";
+import { PERFUMES, NICHE_MODE_EXCLUDED_BRANDS } from "@/lib/catalogue";
 import { logTranslation } from "@/lib/db";
 import { GENRE_FILTERS, type GenreFilter } from "@/lib/perfumeSchema";
 
 const MAX_SITUATION_LENGTH = 600;
+
+type Locale = "fr" | "en";
+
+function parseLocale(value: unknown): Locale {
+  return value === "en" ? "en" : "fr";
+}
 
 function parseGenre(value: unknown): GenreFilter {
   return typeof value === "string" && (GENRE_FILTERS as readonly string[]).includes(value)
@@ -16,29 +22,76 @@ function parseGenre(value: unknown): GenreFilter {
     : "tout";
 }
 
+function parseNiche(value: unknown): boolean {
+  return value === true;
+}
+
+const MESSAGES = {
+  invalidJson: { fr: "Corps de requête JSON invalide.", en: "Invalid JSON request body." },
+  situationTooShort: {
+    fr: "Décris une situation d'au moins quelques mots.",
+    en: "Describe a situation in at least a few words.",
+  },
+  situationTooLong: (max: number) => ({
+    fr: `La situation doit tenir en moins de ${max} caractères.`,
+    en: `The situation must be under ${max} characters.`,
+  }),
+  unparseableOutput: {
+    fr: "La réponse du modèle n'a pas pu être interprétée.",
+    en: "The model's response could not be parsed.",
+  },
+  missingApiKey: {
+    fr: "Clé API Anthropic manquante ou invalide côté serveur.",
+    en: "Missing or invalid Anthropic API key on the server.",
+  },
+  rateLimited: {
+    fr: "Trop de requêtes en ce moment, réessaie dans quelques instants.",
+    en: "Too many requests right now, try again in a moment.",
+  },
+  insufficientCredit: {
+    fr: "Crédit Anthropic insuffisant : ajoute du crédit dans console.anthropic.com.",
+    en: "Insufficient Anthropic credit: add credit at console.anthropic.com.",
+  },
+  badRequest: {
+    fr: "Requête invalide envoyée au modèle.",
+    en: "Invalid request sent to the model.",
+  },
+  serviceDown: {
+    fr: "Le service de traduction est indisponible.",
+    en: "The translation service is unavailable.",
+  },
+} as const;
+
+function localized(entry: { fr: string; en: string }, locale: Locale): string {
+  return entry[locale];
+}
+
 export async function POST(req: NextRequest) {
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Corps de requête JSON invalide." }, { status: 400 });
+    return NextResponse.json({ error: MESSAGES.invalidJson.fr }, { status: 400 });
   }
+
+  const locale = parseLocale((body as { locale?: unknown })?.locale);
 
   const situation = (body as { situation?: unknown })?.situation;
   if (typeof situation !== "string" || situation.trim().length < 3) {
     return NextResponse.json(
-      { error: "Décris une situation d'au moins quelques mots." },
+      { error: localized(MESSAGES.situationTooShort, locale) },
       { status: 400 },
     );
   }
   if (situation.length > MAX_SITUATION_LENGTH) {
     return NextResponse.json(
-      { error: `La situation doit tenir en moins de ${MAX_SITUATION_LENGTH} caractères.` },
+      { error: localized(MESSAGES.situationTooLong(MAX_SITUATION_LENGTH), locale) },
       { status: 400 },
     );
   }
 
   const genre = parseGenre((body as { genre?: unknown })?.genre);
+  const niche = parseNiche((body as { niche?: unknown })?.niche);
 
   try {
     const response = await anthropic.messages.parse({
@@ -53,12 +106,15 @@ export async function POST(req: NextRequest) {
 
     if (!response.parsed_output) {
       return NextResponse.json(
-        { error: "La réponse du modèle n'a pas pu être interprétée." },
+        { error: localized(MESSAGES.unparseableOutput, locale) },
         { status: 502 },
       );
     }
 
-    const pool = genre === "tout" ? PERFUMES : PERFUMES.filter((p) => p.genre === genre);
+    let pool = genre === "tout" ? PERFUMES : PERFUMES.filter((p) => p.genre === genre);
+    if (niche) {
+      pool = pool.filter((p) => !NICHE_MODE_EXCLUDED_BRANDS.includes(p.marque));
+    }
     const parfums_suggeres = matchPerfumes(response.parsed_output, pool);
 
     // Runs after the response is sent, not racing it — a bare unawaited
@@ -84,13 +140,13 @@ export async function POST(req: NextRequest) {
 
     if (error instanceof Anthropic.AuthenticationError) {
       return NextResponse.json(
-        { error: "Clé API Anthropic manquante ou invalide côté serveur." },
+        { error: localized(MESSAGES.missingApiKey, locale) },
         { status: 500 },
       );
     }
     if (error instanceof Anthropic.RateLimitError) {
       return NextResponse.json(
-        { error: "Trop de requêtes en ce moment, réessaie dans quelques instants." },
+        { error: localized(MESSAGES.rateLimited, locale) },
         { status: 429 },
       );
     }
@@ -99,15 +155,15 @@ export async function POST(req: NextRequest) {
     // on message text since the error `.type` is the same generic invalid_request_error.
     if (error instanceof Anthropic.APIError && /credit balance/i.test(error.message)) {
       return NextResponse.json(
-        { error: "Crédit Anthropic insuffisant : ajoute du crédit dans console.anthropic.com." },
+        { error: localized(MESSAGES.insufficientCredit, locale) },
         { status: 402 },
       );
     }
     if (error instanceof Anthropic.BadRequestError) {
-      return NextResponse.json({ error: "Requête invalide envoyée au modèle." }, { status: 400 });
+      return NextResponse.json({ error: localized(MESSAGES.badRequest, locale) }, { status: 400 });
     }
     if (error instanceof Anthropic.APIError) {
-      return NextResponse.json({ error: "Le service de traduction est indisponible." }, { status: 502 });
+      return NextResponse.json({ error: localized(MESSAGES.serviceDown, locale) }, { status: 502 });
     }
     throw error;
   }

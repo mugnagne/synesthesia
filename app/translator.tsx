@@ -3,26 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import type { SynesthesiaResult } from "@/lib/schema";
 import type { MatchedPerfume } from "@/lib/match";
-import { CURRENT_EXAMPLE } from "@/lib/examples";
+import { CURRENT_EXAMPLE, CURRENT_EXAMPLE_EN } from "@/lib/examples";
 import { type GenreFilter } from "@/lib/perfumeSchema";
+import { STRINGS, LOCALES, type Locale } from "@/lib/i18n";
+import AsciiJetpack from "./asciiJetpack";
 
 const FRAGRANTICA_NOTE_SEARCH = "https://www.fragrantica.fr/search-notes/";
 const MAX_LENGTH = 600;
+const LOCALE_STORAGE_KEY = "synesthesie-locale";
 
-const GENRE_OPTIONS: [GenreFilter, string][] = [
-  ["tout", "Tout"],
-  ["homme", "Homme"],
-  ["femme", "Femme"],
-  ["mixte", "Unisexe"],
-];
-
-const INDEX: [string, string, string][] = [
-  ["002", "Émotions", "Ce que la scène contient, et à quelle intensité."],
-  ["003", "Notes olfactives", "La même scène en vocabulaire de parfumeur."],
-  ["004", "Familles", "Les accords qui correspondent."],
-  ["005", "Parfums", "Les entrées les plus proches dans la base."],
-  ["006", "Le lien", "Pourquoi ces notes pour cette scène."],
-];
+const GENRE_VALUES: GenreFilter[] = ["tout", "homme", "femme", "mixte"];
 
 function Blocks({ filled }: { filled: number }) {
   const on = Math.min(5, Math.max(0, Math.round(filled)));
@@ -141,8 +131,15 @@ function AsciiTitle() {
   );
 }
 
-function VideoHero() {
+function VideoHero({
+  locale,
+  onLocaleChange,
+}: {
+  locale: Locale;
+  onLocaleChange: (locale: Locale) => void;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const t = STRINGS[locale];
 
   useEffect(() => {
     const video = videoRef.current;
@@ -173,13 +170,29 @@ function VideoHero() {
           <Blocks filled={3} />
           <span className="wordmark">Synesthésie</span>
         </span>
-        <p className="label">001 — 006</p>
+        <div className="hero-chrome-right">
+          <p className="label">001 — 006</p>
+          <div className="lang-toggle" role="radiogroup" aria-label="Language / Langue">
+            {LOCALES.map((value) => (
+              <button
+                key={value}
+                type="button"
+                role="radio"
+                aria-checked={locale === value}
+                className={`lang-toggle-option${locale === value ? " is-active" : ""}`}
+                onClick={() => onLocaleChange(value)}
+              >
+                {value.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="hero-body">
         <AsciiTitle />
         <a className="label hero-cta" href="#situation-form">
-          Traduire une situation <span className="hero-cta-arrow">↓</span>
+          {t.heroCta} <span className="hero-cta-arrow">↓</span>
         </a>
       </div>
     </section>
@@ -236,11 +249,32 @@ export default function Translator({
 }) {
   const [situation, setSituation] = useState("");
   const [genre, setGenre] = useState<GenreFilter>("tout");
+  const [niche, setNiche] = useState(false);
+  const [locale, setLocale] = useState<Locale>("fr");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<SynesthesiaResult | null>(null);
   const [parfums, setParfums] = useState<MatchedPerfume[]>([]);
   const [copied, setCopied] = useState(false);
+  const t = STRINGS[locale];
+
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+      if (stored === "fr" || stored === "en") setLocale(stored);
+    } catch {
+      // Stockage indisponible (navigation privée, etc.) — reste en français.
+    }
+  }, []);
+
+  function changeLocale(next: Locale) {
+    setLocale(next);
+    try {
+      window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    } catch {
+      // Rien à faire : la préférence ne survivra juste pas à un rechargement.
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -256,17 +290,17 @@ export default function Translator({
       const res = await fetch("/api/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ situation, genre }),
+        body: JSON.stringify({ situation, genre, niche, locale }),
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? "Une erreur est survenue.");
+        setError(data.error ?? t.errorGeneric);
         return;
       }
       setResult(data.result);
       setParfums(data.parfums_suggeres ?? []);
     } catch {
-      setError("Impossible de contacter le serveur.");
+      setError(t.errorNetwork);
     } finally {
       setLoading(false);
     }
@@ -279,41 +313,41 @@ export default function Translator({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError("Le navigateur a refusé l'accès au presse-papier. Les notes restent lisibles ci-dessus.");
+      setError(t.errorClipboard);
     }
   }
 
   return (
     <div className="shell">
-      <VideoHero />
+      <VideoHero locale={locale} onLocaleChange={changeLocale} />
 
       <main className="main">
         <Reveal className="band" id="situation-form">
-          <BandHead index="001" title="Situation" />
+          <BandHead index="001" title={t.situationIndexTitle} />
           <form onSubmit={handleSubmit}>
             <p className="body small" style={{ marginBottom: "var(--s3)" }}>
-              Une situation précise entre. Des notes de parfumerie et des parfums réels sortent.
+              {t.formIntro}
             </p>
 
             <label className="label" htmlFor="situation" style={{ display: "block", marginBottom: "var(--s1)" }}>
-              Décrivez la scène
+              {t.describeLabel}
             </label>
             <textarea
               id="situation"
               className="field"
               value={situation}
               onChange={(e) => setSituation(e.target.value)}
-              placeholder={CURRENT_EXAMPLE}
+              placeholder={locale === "en" ? CURRENT_EXAMPLE_EN : CURRENT_EXAMPLE}
               rows={4}
               maxLength={MAX_LENGTH}
             />
 
             <div style={{ marginTop: "var(--s3)" }}>
               <p className="label" style={{ marginBottom: "var(--s1)" }}>
-                Genre
+                {t.genreLabel}
               </p>
-              <div className="segmented" role="radiogroup" aria-label="Filtrer les parfums par genre">
-                {GENRE_OPTIONS.map(([value, label]) => (
+              <div className="segmented" role="radiogroup" aria-label={t.genreLabel}>
+                {GENRE_VALUES.map((value) => (
                   <button
                     key={value}
                     type="button"
@@ -322,10 +356,24 @@ export default function Translator({
                     className={`segmented-option label${genre === value ? " is-active" : ""}`}
                     onClick={() => setGenre(value)}
                   >
-                    {label}
+                    {t.genreOptions[value]}
                   </button>
                 ))}
               </div>
+            </div>
+
+            <div style={{ marginTop: "var(--s3)" }}>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={niche}
+                title={t.nicheHint}
+                className={`toggle-pill label${niche ? " is-active" : ""}`}
+                onClick={() => setNiche((v) => !v)}
+              >
+                <span className="toggle-pill-dot" aria-hidden="true" />
+                {t.nicheLabel}
+              </button>
             </div>
 
             <div
@@ -338,7 +386,7 @@ export default function Translator({
               }}
             >
               <button type="submit" className="btn" disabled={loading || !situation.trim()}>
-                {loading ? "Traduction en cours" : "Traduire"}
+                {loading ? t.submitting : t.submit}
               </button>
               <p className="label">
                 {situation.length} / {MAX_LENGTH}
@@ -349,9 +397,9 @@ export default function Translator({
 
         {!result && !loading && !error && (
           <Reveal className="band">
-            <BandHead index="000" title="Index" />
+            <BandHead index="000" title={t.indexBandTitle} />
             <ul className="rows">
-              {INDEX.map(([n, titre, description]) => (
+              {t.index.map(([n, titre, description]) => (
                 <li key={n} className="row-stack">
                   <p className="label">
                     <span className="label-blue">{n}</span> {titre}
@@ -368,18 +416,23 @@ export default function Translator({
         <div aria-live="polite">
           {loading && (
             <section className="band">
-              <BandHead index="002" title="Lecture" />
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--s2)" }}>
-                <div className="skeleton" style={{ height: "var(--s3)", width: "60%" }} />
-                <div className="skeleton" style={{ height: "var(--s6)", width: "100%" }} />
-                <div className="skeleton" style={{ height: "var(--s3)", width: "40%" }} />
-              </div>
+              <BandHead index="002" title={t.loadingBandTitle} />
+              {typeof window !== "undefined" &&
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--s2)" }}>
+                  <div className="skeleton" style={{ height: "var(--s3)", width: "60%" }} />
+                  <div className="skeleton" style={{ height: "var(--s6)", width: "100%" }} />
+                  <div className="skeleton" style={{ height: "var(--s3)", width: "40%" }} />
+                </div>
+              ) : (
+                <AsciiJetpack locale={locale} />
+              )}
             </section>
           )}
 
           {error && (
             <section className="band">
-              <BandHead index="ERR" title="Incident" />
+              <BandHead index="ERR" title={t.errorBandTitle} />
               <p className="notice small">{error}</p>
             </section>
           )}
@@ -387,7 +440,7 @@ export default function Translator({
           {result && (
             <>
               <Reveal className="band">
-                <BandHead index="002" title="Émotions" />
+                <BandHead index="002" title={t.emotionsBandTitle} />
                 <ul className="rows">
                   {result.emotions.map((emotion) => (
                     <li key={emotion.nom} className="row">
@@ -399,7 +452,7 @@ export default function Translator({
               </Reveal>
 
               <Reveal className="band band-blue">
-                <BandHead index="003" title="Notes olfactives" />
+                <BandHead index="003" title={t.notesBandTitle} />
                 <div>
                   <p className="notes">{result.notes_olfactives.join(", ")}</p>
                   <div
@@ -415,7 +468,7 @@ export default function Translator({
                       className={`btn btn-quiet label${copied ? " is-copied" : ""}`}
                       onClick={copyNotes}
                     >
-                      {copied ? "Copié" : "Copier la liste"}
+                      {copied ? t.copied : t.copy}
                     </button>
                     <a
                       className="link label"
@@ -423,14 +476,14 @@ export default function Translator({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Chercher ces notes sur Fragrantica
+                      {t.fragranticaLink}
                     </a>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal className="band">
-                <BandHead index="004" title="Familles" />
+                <BandHead index="004" title={t.famillesBandTitle} />
                 <ul className="tags">
                   {result.familles_olfactives.map((famille) => (
                     <li key={famille} className="tag label">
@@ -441,7 +494,7 @@ export default function Translator({
               </Reveal>
 
               <Reveal className="band">
-                <BandHead index="005" title="Parfums" />
+                <BandHead index="005" title={t.parfumsBandTitle} />
                 {parfums.length > 0 ? (
                   <ul className="rows">
                     {parfums.map((p) => (
@@ -452,22 +505,19 @@ export default function Translator({
                         </p>
                         {p.notes_communes.length > 0 && (
                           <p className="small" style={{ marginTop: "var(--s1)" }}>
-                            En commun : {p.notes_communes.join(", ")}
+                            {t.sharedNotes} {p.notes_communes.join(", ")}
                           </p>
                         )}
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="body small">
-                    Aucun parfum de la base ne partage assez de notes avec cette situation. La liste
-                    du bloc 003 reste utilisable pour chercher plus large.
-                  </p>
+                  <p className="body small">{t.noMatch}</p>
                 )}
               </Reveal>
 
               <Reveal className="band">
-                <BandHead index="006" title="Le lien" />
+                <BandHead index="006" title={t.linkBandTitle} />
                 <p className="wall-text">{result.recit}</p>
               </Reveal>
             </>
@@ -477,9 +527,7 @@ export default function Translator({
 
       <footer className="bar" style={{ borderBottom: 0 }}>
         <p className="label">Camille - 2026</p>
-        <p className="label">
-          {perfumeCount} parfums, {brandCount} maisons
-        </p>
+        <p className="label">{t.footerCatalogue(perfumeCount, brandCount)}</p>
       </footer>
     </div>
   );

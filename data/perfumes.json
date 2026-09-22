@@ -752,5 +752,12 @@
   { "marque": "Parfums de Marly", "nom": "Delina La Rosée", "genre": "femme", "familles_olfactives": ["floral fruité frais"], "notes_olfactives": ["poire", "rhubarbe", "rose", "musc blanc"] },
   { "marque": "Parfums de Marly", "nom": "Valaya", "genre": "femme", "familles_olfactives": ["oriental floral"], "notes_olfactives": ["vanille", "fleur d'oranger", "jasmin", "santal"] },
   { "marque": "Parfums de Marly", "nom": "Oriana", "genre": "femme", "familles_olfactives": ["floral oriental"], "notes_olfactives": ["mandarine", "rose", "vanille", "santal"] },
-  { "marque": "Parfums de Marly", "nom": "Meliora", "genre": "femme", "familles_olfactives": ["floral chypré"], "notes_olfactives": ["rose", "patchouli", "vanille"] }
+  { "marque": "Parfums de Marly", "nom": "Meliora", "genre": "femme", "familles_olfactives": ["floral chypré"], "notes_olfactives": ["rose", "patchouli", "vanille"] },
+
+  { "marque": "Matière Première", "nom": "Musc Nomade", "genre": "mixte", "familles_olfactives": ["musqué"], "notes_olfactives": ["musc", "ambrette", "iris"] },
+  { "marque": "Matière Première", "nom": "Radical Rose", "genre": "mixte", "familles_olfactives": ["floral"], "notes_olfactives": ["rose", "géranium", "musc"] },
+  { "marque": "Matière Première", "nom": "Âme de Cologne", "genre": "mixte", "familles_olfactives": ["hespéridé"], "notes_olfactives": ["néroli", "bergamote", "romarin"] },
+  { "marque": "Matière Première", "nom": "Encens Suave", "genre": "mixte", "familles_olfactives": ["ambré", "encens"], "notes_olfactives": ["encens", "benjoin", "vanille"] },
+  { "marque": "Matière Première", "nom": "Vanilla Insolence", "genre": "mixte", "familles_olfactives": ["gourmand"], "notes_olfactives": ["vanille", "fève tonka"] },
+  { "marque": "Matière Première", "nom": "Century Flower", "genre": "mixte", "familles_olfactives": ["floral blanc"], "notes_olfactives": ["fleur d'oranger", "jasmin", "musc"] }
 ]
